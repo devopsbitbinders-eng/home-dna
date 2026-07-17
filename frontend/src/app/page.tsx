@@ -118,9 +118,7 @@ export default function HomePage() {
           </div>
           <span className="tracking-[0.4em] text-[10px] uppercase font-bold text-[#1A1A1A]">Home DNA</span>
         </motion.div>
-        <button onClick={() => setStarted(true)} className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#1A1A1A] hover:text-[#A8765E] transition-colors">
-          Start Assessment
-        </button>
+        <div />
       </nav>
 
       {/* ═══ HERO — Split Screen ═══ */}
@@ -128,15 +126,7 @@ export default function HomePage() {
 
         {/* Left: Text — Mouse Parallax layers */}
         <div className="w-full lg:w-[52%] flex flex-col justify-center px-8 md:px-16 lg:pl-24 lg:pr-8 z-20 pt-32 pb-16 lg:pt-0 lg:pb-0">
-          {/* Eyebrow */}
-          <motion.p
-            initial={{ opacity: 0, x: -40, rotateY: -20 }} animate={{ opacity: 1, x: 0, rotateY: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            style={{ x: useTransform(springX, v => v * -12), y: useTransform(springY, v => v * -6), transformStyle: "preserve-3d" }}
-            className="text-[#A8765E] text-[10px] tracking-[0.4em] uppercase font-bold flex items-center gap-4 mb-8"
-          >
-            <span className="w-8 h-[2px] bg-[#A8765E]" />AI-Powered Architectural Intelligence
-          </motion.p>
+
 
           {/* 3D Heading — deepest parallax layer */}
           <motion.h1
