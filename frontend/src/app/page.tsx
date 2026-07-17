@@ -1,265 +1,378 @@
 "use client";
 
-import { useState, useRef, ReactNode } from "react";
+import { useState, useRef, ReactNode, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
-import { ArrowRight, Sparkles, Compass, Key, Hexagon, Home } from "lucide-react";
+import { motion, useScroll, useTransform, useSpring, useMotionValue, useInView } from "framer-motion";
+import { ArrowRight, Sparkles, Compass, Key, Hexagon, Home, Palette, Armchair, Sun, Coins, Box } from "lucide-react";
 import AssessmentForm from "@/components/AssessmentForm";
 
-// Dynamically import the 3D scene so it only runs on the client side
 const HeroScene = dynamic(() => import("@/components/HeroScene"), { ssr: false });
 
-// MAGNETIC BUTTON
-function MagneticButton({ children, className, onClick }: { children: ReactNode, className?: string, onClick?: () => void }) {
-  const ref = useRef<HTMLButtonElement>(null);
+/* ─── Global Mouse Parallax Hook ─── */
+function useMouseParallax() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 150, damping: 15, mass: 0.1 });
-  const springY = useSpring(y, { stiffness: 150, damping: 15, mass: 0.1 });
+  const springX = useSpring(x, { stiffness: 40, damping: 25 });
+  const springY = useSpring(y, { stiffness: 40, damping: 25 });
+  useEffect(() => {
+    const move = (e: MouseEvent) => {
+      x.set((e.clientX / window.innerWidth - 0.5) * 2);
+      y.set((e.clientY / window.innerHeight - 0.5) * 2);
+    };
+    window.addEventListener("mousemove", move);
+    return () => window.removeEventListener("mousemove", move);
+  }, []);
+  return { springX, springY };
+}
 
-  const handleMouse = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { clientX, clientY } = e;
-    const { height, width, left, top } = ref.current!.getBoundingClientRect();
-    x.set((clientX - (left + width / 2)) * 0.2);
-    y.set((clientY - (top + height / 2)) * 0.2);
+/* ─── 3D Tilt Card on Hover ─── */
+function TiltCard({ children, className, depth = 20 }: { children: ReactNode; className?: string; depth?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const rotX = useMotionValue(0);
+  const rotY = useMotionValue(0);
+  const sRotX = useSpring(rotX, { stiffness: 120, damping: 20 });
+  const sRotY = useSpring(rotY, { stiffness: 120, damping: 20 });
+
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    const { left, top, width, height } = ref.current.getBoundingClientRect();
+    const px = ((e.clientX - left) / width - 0.5) * 2;
+    const py = ((e.clientY - top) / height - 0.5) * 2;
+    rotY.set(px * depth);
+    rotX.set(-py * depth);
   };
-
-  const reset = () => { x.set(0); y.set(0); };
+  const handleLeave = () => { rotX.set(0); rotY.set(0); };
 
   return (
-    <motion.button
-      ref={ref} onMouseMove={handleMouse} onMouseLeave={reset}
-      animate={{ x: 0, y: 0 }} style={{ x: springX, y: springY }} onClick={onClick}
+    <motion.div
+      ref={ref} onMouseMove={handleMove} onMouseLeave={handleLeave}
+      style={{ rotateX: sRotX, rotateY: sRotY, transformStyle: "preserve-3d", perspective: 800 }}
       className={className}
     >
       {children}
-    </motion.button>
+    </motion.div>
+  );
+}
+
+/* ─── Magnetic Button ─── */
+function MagneticButton({ children, className, onClick }: { children: ReactNode; className?: string; onClick?: () => void }) {
+  const ref = useRef<HTMLButtonElement>(null);
+  const x = useMotionValue(0); const y = useMotionValue(0);
+  const sx = useSpring(x, { stiffness: 150, damping: 15, mass: 0.1 });
+  const sy = useSpring(y, { stiffness: 150, damping: 15, mass: 0.1 });
+  const handleMouse = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { left, top, width, height } = ref.current!.getBoundingClientRect();
+    x.set((e.clientX - (left + width / 2)) * 0.25);
+    y.set((e.clientY - (top + height / 2)) * 0.25);
+  };
+  return (
+    <motion.button ref={ref} onMouseMove={handleMouse} onMouseLeave={() => { x.set(0); y.set(0); }}
+      style={{ x: sx, y: sy }} onClick={onClick} className={className}>{children}</motion.button>
+  );
+}
+
+/* ─── 3D Section Title ─── */
+function SectionTitle({ eyebrow, title, italic, center = false }: { eyebrow: string; title: string; italic: string; center?: boolean }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  return (
+    <div ref={ref} className={center ? "text-center" : ""}>
+      <motion.p
+        initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}
+        className="text-[#A8765E] text-[10px] tracking-[0.35em] uppercase font-bold mb-5 flex items-center gap-3" style={center ? { justifyContent: "center" } : {}}
+      >
+        <span className="w-8 h-[1.5px] bg-[#A8765E]" />{eyebrow}
+      </motion.p>
+      <motion.h2
+        initial={{ opacity: 0, rotateX: -30, y: 30 }} animate={inView ? { opacity: 1, rotateX: 0, y: 0 } : {}}
+        transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        style={{ perspective: 800, transformStyle: "preserve-3d" }}
+        className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-[#1A1A1A] leading-tight"
+      >
+        {title} <span className="italic text-[#A8765E]">{italic}</span>
+      </motion.h2>
+    </div>
   );
 }
 
 export default function HomePage() {
   const [started, setStarted] = useState(false);
   const { scrollYProgress } = useScroll();
-  const yHero = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const yHero = useTransform(scrollYProgress, [0, 0.5], [0, 150]);
+  const { springX, springY } = useMouseParallax();
 
-  if (started) {
-    return (
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-        <AssessmentForm />
-      </motion.div>
-    );
-  }
+  if (started) return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
+      <AssessmentForm />
+    </motion.div>
+  );
 
   return (
     <div className="bg-[#FAF9F6] min-h-screen text-[#1A1A1A] font-sans selection:bg-[#A8765E] selection:text-white overflow-x-hidden">
 
       {/* NAVBAR */}
       <nav className="absolute top-0 w-full px-8 md:px-16 py-8 flex justify-between items-center z-50">
-        <div className="flex items-center gap-3 cursor-pointer group">
+        <motion.div style={{ x: useTransform(springX, v => v * -8), y: useTransform(springY, v => v * -4) }} className="flex items-center gap-3 cursor-pointer group">
           <div className="w-8 h-8 flex items-center justify-center border border-[#1A1A1A]/20 rounded-full group-hover:border-[#A8765E] transition-colors duration-300">
-            <div className="w-2.5 h-2.5 bg-[#1A1A1A] rounded-full group-hover:bg-[#A8765E] transition-colors duration-300"></div>
+            <div className="w-2.5 h-2.5 bg-[#1A1A1A] rounded-full group-hover:bg-[#A8765E] transition-colors duration-300" />
           </div>
           <span className="tracking-[0.4em] text-[10px] uppercase font-bold text-[#1A1A1A]">Home DNA</span>
-        </div>
-        <button onClick={() => setStarted(true)} className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#1A1A1A] hover:text-[#A8765E] transition-colors duration-300">
+        </motion.div>
+        <button onClick={() => setStarted(true)} className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#1A1A1A] hover:text-[#A8765E] transition-colors">
           Start Assessment
         </button>
       </nav>
 
-      {/* ────────────────────────────────────────
-          HERO — Left Text + Right 3D Canvas
-      ──────────────────────────────────────── */}
-      <section className="relative min-h-screen flex flex-col lg:flex-row overflow-hidden">
+      {/* ═══ HERO — Split Screen ═══ */}
+      <section className="relative min-h-screen flex flex-col lg:flex-row overflow-hidden" style={{ perspective: "1200px" }}>
 
-        {/* Left: Text Content */}
+        {/* Left: Text — Mouse Parallax layers */}
         <div className="w-full lg:w-[52%] flex flex-col justify-center px-8 md:px-16 lg:pl-24 lg:pr-8 z-20 pt-32 pb-16 lg:pt-0 lg:pb-0">
-          <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, ease: "easeOut" }}>
+          {/* Eyebrow */}
+          <motion.p
+            initial={{ opacity: 0, x: -40, rotateY: -20 }} animate={{ opacity: 1, x: 0, rotateY: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            style={{ x: useTransform(springX, v => v * -12), y: useTransform(springY, v => v * -6), transformStyle: "preserve-3d" }}
+            className="text-[#A8765E] text-[10px] tracking-[0.4em] uppercase font-bold flex items-center gap-4 mb-8"
+          >
+            <span className="w-8 h-[2px] bg-[#A8765E]" />AI-Powered Architectural Intelligence
+          </motion.p>
 
-            <p className="text-[#A8765E] text-[10px] tracking-[0.4em] uppercase mb-8 font-bold flex items-center gap-4">
-              <span className="w-8 h-[2px] bg-[#A8765E]" />
-              AI-Powered Architectural Intelligence
-            </p>
+          {/* 3D Heading — deepest parallax layer */}
+          <motion.h1
+            initial={{ opacity: 0, y: 50, rotateX: -20 }} animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{ x: useTransform(springX, v => v * -18), y: useTransform(springY, v => v * -10), transformStyle: "preserve-3d", perspective: 600 }}
+            className="font-serif text-6xl md:text-7xl lg:text-[88px] font-light leading-[1.05] mb-8 text-[#1A1A1A] tracking-tight"
+          >
+            Curate Your <br />
+            <span className="italic text-[#A8765E]" style={{ display: "inline-block", textShadow: "4px 4px 0px rgba(168,118,94,0.12), 8px 8px 0px rgba(168,118,94,0.06)" }}>Sanctuary.</span>
+          </motion.h1>
 
-            <h1 className="font-serif text-6xl md:text-7xl lg:text-[88px] font-light leading-[1.05] mb-8 text-[#1A1A1A] tracking-tight">
-              Curate Your <br />
-              <span className="italic text-[#A8765E]">Sanctuary.</span>
-            </h1>
+          {/* Subtext */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }}
+            style={{ x: useTransform(springX, v => v * -8), y: useTransform(springY, v => v * -4) }}
+            className="font-sans text-[#555555] text-lg md:text-xl font-light leading-relaxed mb-12 max-w-lg"
+          >
+            Move beyond generic moodboards. Unlock the interior language that is inherently, uniquely yours — powered by AI.
+          </motion.p>
 
-            <p className="font-sans text-[#555555] text-lg md:text-xl font-light leading-relaxed mb-12 max-w-lg">
-              Move beyond generic moodboards. Unlock the interior language that is inherently, uniquely yours — powered by AI.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-6">
-              <MagneticButton
-                onClick={() => setStarted(true)}
-                className="group relative overflow-hidden bg-[#1A1A1A] text-white px-10 py-5 rounded-full font-sans tracking-[0.2em] text-[10px] uppercase hover:bg-[#A8765E] transition-colors duration-500 shadow-xl flex items-center gap-4"
-              >
-                <span>Begin Analysis</span>
-                <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
-              </MagneticButton>
-              <div className="flex items-center gap-3 text-[10px] tracking-widest text-[#888888] uppercase font-semibold">
-                <Sparkles size={14} className="text-[#A8765E]" />
-                3-Minute Assessment
-              </div>
+          {/* CTA */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.5 }} className="flex flex-wrap items-center gap-6">
+            <MagneticButton onClick={() => setStarted(true)} className="group relative overflow-hidden bg-[#1A1A1A] text-white px-10 py-5 rounded-full font-sans tracking-[0.2em] text-[10px] uppercase hover:bg-[#A8765E] transition-colors duration-500 shadow-xl flex items-center gap-4">
+              <span>Begin Analysis</span>
+              <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
+            </MagneticButton>
+            <div className="flex items-center gap-3 text-[10px] tracking-widest text-[#888] uppercase font-semibold">
+              <Sparkles size={14} className="text-[#A8765E]" /> 3-Minute Assessment
             </div>
+          </motion.div>
 
-            {/* Stats Row */}
-            <motion.div
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2, duration: 1 }}
-              className="flex gap-10 mt-16 pt-10 border-t border-[#E5DED5]"
-            >
-              {[["500+", "Projects Curated"], ["98%", "Client Match Rate"], ["3 min", "Assessment Time"]].map(([val, label]) => (
-                <div key={label}>
-                  <p className="font-serif text-3xl text-[#1A1A1A] font-light">{val}</p>
-                  <p className="text-[9px] tracking-[0.2em] uppercase text-[#888888] mt-1 font-semibold">{label}</p>
-                </div>
-              ))}
-            </motion.div>
+          {/* Stats — shallowest parallax */}
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2, duration: 1 }}
+            style={{ x: useTransform(springX, v => v * -4), y: useTransform(springY, v => v * -2) }}
+            className="flex gap-10 mt-16 pt-10 border-t border-[#E5DED5]"
+          >
+            {[["500+", "Projects"], ["98%", "Match Rate"], ["3 min", "Assessment"]].map(([val, label]) => (
+              <div key={label} className="group cursor-default">
+                <p className="font-serif text-3xl text-[#1A1A1A] font-light group-hover:text-[#A8765E] transition-colors">{val}</p>
+                <p className="text-[9px] tracking-[0.2em] uppercase text-[#888] mt-1 font-semibold">{label}</p>
+              </div>
+            ))}
           </motion.div>
         </div>
 
         {/* Right: 3D Scene */}
-        <div className="w-full lg:w-[48%] relative h-[50vh] lg:h-screen">
-          {/* Subtle warm gradient background behind the 3D scene */}
+        <div className="w-full lg:w-[48%] relative h-[55vh] lg:h-screen">
           <div className="absolute inset-0 bg-gradient-to-br from-[#F4EDE4] via-[#FAF9F6] to-[#EDE0D0]" />
-          
-          {/* The 3D Canvas */}
           <HeroScene />
 
-          {/* Floating Glass Card — overlaid on 3D scene */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, delay: 1, ease: "easeOut" }}
-            className="absolute bottom-12 left-8 lg:left-12 bg-white/70 backdrop-blur-2xl border border-white/80 p-6 rounded-[24px] shadow-2xl max-w-[260px] z-10"
-          >
-            <p className="text-[9px] tracking-[0.2em] uppercase text-[#A8765E] font-bold mb-1">AI Output · Live Preview</p>
-            <p className="font-serif text-xl text-[#1A1A1A] mb-4">Warm Minimalist</p>
-            <div className="flex gap-2 flex-wrap">
-              {["Oak", "Linen", "Brass", "Stone"].map(m => (
-                <span key={m} className="px-3 py-1 bg-[#F4F1ED] rounded-full text-[9px] uppercase tracking-widest text-[#555555]">{m}</span>
-              ))}
+          {/* Floating Glass Card — 3D tilt */}
+          <TiltCard depth={12} className="absolute bottom-12 left-8 lg:-left-16 max-w-[270px] z-10">
+            <div className="bg-white/75 backdrop-blur-2xl border border-white/90 p-6 rounded-[24px] shadow-2xl" style={{ transformStyle: "preserve-3d" }}>
+              <div style={{ transform: "translateZ(20px)" }}>
+                <p className="text-[9px] tracking-[0.2em] uppercase text-[#A8765E] font-bold mb-1">AI Output · Live</p>
+                <p className="font-serif text-xl text-[#1A1A1A] mb-4">Warm Minimalist</p>
+                <div className="flex gap-2 flex-wrap">
+                  {["Oak", "Linen", "Brass", "Stone"].map(m => (
+                    <span key={m} className="px-3 py-1 bg-[#F4F1ED] rounded-full text-[9px] uppercase tracking-widest text-[#555]">{m}</span>
+                  ))}
+                </div>
+                <div className="mt-4 w-full bg-[#E5DED5] h-1 rounded-full overflow-hidden">
+                  <motion.div initial={{ width: 0 }} animate={{ width: "92%" }} transition={{ delay: 2, duration: 2, ease: "easeOut" }} className="h-full bg-[#A8765E] rounded-full" />
+                </div>
+                <p className="text-[9px] text-[#888] mt-1 tracking-widest uppercase">92% Lifestyle Match</p>
+              </div>
             </div>
-            <div className="mt-4 w-full bg-[#E5DED5] h-1 rounded-full overflow-hidden">
-              <motion.div initial={{ width: 0 }} animate={{ width: "92%" }} transition={{ delay: 2, duration: 2, ease: "easeOut" }} className="h-full bg-[#A8765E] rounded-full" />
-            </div>
-            <p className="text-[9px] text-[#888888] mt-1 tracking-widest uppercase">92% Lifestyle Match</p>
-          </motion.div>
+          </TiltCard>
 
-          {/* Top-right badge */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.2, delay: 1.4 }}
-            className="absolute top-16 right-8 lg:right-12 bg-white/70 backdrop-blur-2xl border border-white/80 p-4 rounded-[20px] shadow-xl z-10"
-          >
-            <p className="text-[9px] tracking-widest uppercase text-[#888888] font-bold mb-1">Identified Style</p>
-            <p className="font-serif text-lg text-[#1A1A1A]">Japandi Luxe</p>
-          </motion.div>
+          <TiltCard depth={10} className="absolute top-16 right-8 lg:right-12 z-10">
+            <div className="bg-white/75 backdrop-blur-2xl border border-white/90 p-4 rounded-[20px] shadow-xl" style={{ transformStyle: "preserve-3d" }}>
+              <div style={{ transform: "translateZ(15px)" }}>
+                <p className="text-[9px] tracking-widest uppercase text-[#888] font-bold mb-1">Identified Style</p>
+                <p className="font-serif text-lg text-[#1A1A1A]">Japandi Luxe</p>
+              </div>
+            </div>
+          </TiltCard>
         </div>
       </section>
 
-      {/* ────────────────────────────────────────
-          THREE PILLARS
-      ──────────────────────────────────────── */}
-      <section className="py-32 px-8 md:px-16 lg:px-24 bg-white">
+      {/* ═══ THREE PILLARS — 3D Tilt Cards ═══ */}
+      <section className="py-32 px-8 md:px-16 lg:px-24 bg-white" style={{ perspective: "1200px" }}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-24">
-            <p className="text-[#A8765E] text-[10px] tracking-[0.3em] uppercase mb-4 font-bold">Why Home DNA</p>
-            <h2 className="font-serif text-4xl md:text-5xl font-light text-[#1A1A1A]">
-              Design Based on <span className="italic text-[#A8765E]">Intelligence.</span>
-            </h2>
+            <SectionTitle eyebrow="Why Home DNA" title="Design Based on" italic="Intelligence." center />
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { icon: <Compass size={28} strokeWidth={1} />, title: "Spatial Psychology", desc: "We analyze how you move and live to recommend layouts that reduce friction and increase daily comfort." },
               { icon: <Hexagon size={28} strokeWidth={1} />, title: "Material Harmonics", desc: "Textures and tones mathematically matched to your aesthetic preferences and maintenance capacity." },
-              { icon: <Key size={28} strokeWidth={1} />, title: "Lifestyle Blueprint", desc: "A tailored architectural direction you can hand directly to your contractor, architect, or interior designer." }
+              { icon: <Key size={28} strokeWidth={1} />, title: "Lifestyle Blueprint", desc: "A tailored architectural direction you can hand directly to your contractor or interior designer." }
             ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ delay: i * 0.2, duration: 0.8 }}
-                className="flex flex-col items-center text-center group cursor-default"
-              >
-                <div className="w-16 h-16 rounded-full bg-[#F4F1ED] flex items-center justify-center text-[#A8765E] mb-8 group-hover:scale-110 group-hover:bg-[#A8765E] group-hover:text-white transition-all duration-500 shadow-sm">
-                  {item.icon}
-                </div>
-                <h3 className="font-serif text-2xl text-[#1A1A1A] mb-4">{item.title}</h3>
-                <p className="font-sans text-[#666666] leading-relaxed font-light text-sm">{item.desc}</p>
-              </motion.div>
+              <TiltCard key={i} depth={18} className="cursor-default">
+                <motion.div
+                  initial={{ opacity: 0, y: 40, rotateX: -20 }} whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                  viewport={{ once: true, margin: "-60px" }} transition={{ delay: i * 0.15, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                  className="h-full bg-[#FAF9F6] border border-[#EAE6DF] rounded-[28px] p-10 flex flex-col items-center text-center group hover:shadow-2xl transition-shadow duration-500"
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  <div className="w-16 h-16 rounded-full bg-[#F4F1ED] flex items-center justify-center text-[#A8765E] mb-8 group-hover:scale-110 group-hover:bg-[#A8765E] group-hover:text-white transition-all duration-500 shadow-sm" style={{ transform: "translateZ(30px)" }}>
+                    {item.icon}
+                  </div>
+                  <h3 className="font-serif text-2xl text-[#1A1A1A] mb-4" style={{ transform: "translateZ(20px)" }}>{item.title}</h3>
+                  <div className="w-8 h-[1.5px] bg-[#E5DED5] mb-4 group-hover:w-16 group-hover:bg-[#A8765E] transition-all duration-500" />
+                  <p className="font-sans text-[#666] leading-relaxed font-light text-sm" style={{ transform: "translateZ(10px)" }}>{item.desc}</p>
+                </motion.div>
+              </TiltCard>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ────────────────────────────────────────
-          STYLE GALLERY — Masonry-style
-      ──────────────────────────────────────── */}
-      <section className="py-32 px-8 md:px-16 lg:px-24 bg-[#FAF9F6]">
+      {/* ═══ WHAT YOU GET — 3D Feature Grid ═══ */}
+      <section className="py-32 px-8 md:px-16 lg:px-24 bg-[#1A1A1A] text-white" style={{ perspective: "1200px" }}>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row justify-between items-end mb-20 gap-8">
+            <motion.div initial={{ opacity: 0, rotateY: -15, x: -40 }} whileInView={{ opacity: 1, rotateY: 0, x: 0 }} viewport={{ once: true }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }} style={{ transformStyle: "preserve-3d" }}>
+              <p className="text-[#A8765E] text-[10px] tracking-[0.35em] uppercase font-bold mb-5 flex items-center gap-3">
+                <span className="w-8 h-[1.5px] bg-[#A8765E]" />Your Report Includes
+              </p>
+              <h2 className="font-serif text-4xl md:text-5xl font-light leading-tight">Everything You <br /><span className="italic text-[#A8765E]">Need to Build.</span></h2>
+            </motion.div>
+            <motion.p initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.2 }} className="text-white/50 text-lg font-light max-w-md">A complete architectural brief you can hand directly to any designer or contractor.</motion.p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              { icon: <Home size={20} strokeWidth={1} />, title: "Interior Personality", desc: "Your exact aesthetic language" },
+              { icon: <Palette size={20} strokeWidth={1} />, title: "Colour Palette", desc: "Harmonious, curated tones" },
+              { icon: <Armchair size={20} strokeWidth={1} />, title: "Furniture Style", desc: "Curated profiles for you" },
+              { icon: <Sun size={20} strokeWidth={1} />, title: "Lighting Plan", desc: "Illumination for your routine" },
+              { icon: <Coins size={20} strokeWidth={1} />, title: "Budget Estimate", desc: "Realistic ₹ projections" },
+              { icon: <Box size={20} strokeWidth={1} />, title: "Storage Strategy", desc: "Built around your habits" },
+            ].map((item, i) => (
+              <TiltCard key={i} depth={15}>
+                <motion.div
+                  initial={{ opacity: 0, y: 30, rotateX: -15 }} whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                  viewport={{ once: true, margin: "-40px" }} transition={{ delay: i * 0.08, duration: 0.8 }}
+                  className="bg-white/5 border border-white/10 rounded-[24px] p-8 hover:bg-white/10 hover:border-[#A8765E]/40 transition-all duration-500 group h-full"
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  <div className="text-[#A8765E] mb-5 group-hover:scale-110 transition-transform duration-300" style={{ transform: "translateZ(25px)" }}>
+                    {item.icon}
+                  </div>
+                  <h4 className="font-serif text-xl text-white mb-2" style={{ transform: "translateZ(18px)" }}>{item.title}</h4>
+                  <p className="text-white/40 text-xs font-sans leading-relaxed" style={{ transform: "translateZ(12px)" }}>{item.desc}</p>
+                </motion.div>
+              </TiltCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ STYLE GALLERY — 3D Image Cards ═══ */}
+      <section className="py-32 px-8 md:px-16 lg:px-24 bg-[#FAF9F6]" style={{ perspective: "1200px" }}>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-            <div>
-              <p className="text-[#A8765E] text-[10px] tracking-[0.3em] uppercase mb-4 font-bold">The Possibilities</p>
-              <h2 className="font-serif text-4xl md:text-5xl font-light text-[#1A1A1A]">
-                Curated <span className="italic text-[#A8765E]">Visions.</span>
-              </h2>
-            </div>
-            <p className="font-sans text-[#666666] text-lg font-light max-w-md">
-              Our algorithm synthesizes your habits and preferences into a singular, perfect architectural direction.
-            </p>
+            <SectionTitle eyebrow="The Possibilities" title="Curated" italic="Visions." />
+            <p className="font-sans text-[#666] text-lg font-light max-w-md">Our algorithm synthesizes your habits into a singular, perfect architectural direction.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="group cursor-pointer rounded-[32px] overflow-hidden relative h-[500px]">
-              <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80" alt="Executive Minimalist" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 p-10">
-                <span className="text-[9px] tracking-widest uppercase font-bold bg-white/90 backdrop-blur-md px-3 py-1 inline-block rounded-full text-[#A8765E] mb-3">Contemporary</span>
-                <h3 className="font-serif text-3xl text-white">Executive Minimalist</h3>
-              </div>
-            </motion.div>
+            <TiltCard depth={10}>
+              <motion.div
+                initial={{ opacity: 0, rotateY: -20, x: -40 }} whileInView={{ opacity: 1, rotateY: 0, x: 0 }}
+                viewport={{ once: true }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                className="group cursor-pointer rounded-[32px] overflow-hidden relative h-[500px]" style={{ transformStyle: "preserve-3d" }}
+              >
+                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80" alt="Executive Minimalist" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                <div className="absolute bottom-0 left-0 p-10" style={{ transform: "translateZ(25px)" }}>
+                  <span className="text-[9px] tracking-widest uppercase font-bold bg-white/90 backdrop-blur-md px-3 py-1 inline-block rounded-full text-[#A8765E] mb-3">Contemporary</span>
+                  <h3 className="font-serif text-3xl text-white">Executive Minimalist</h3>
+                </div>
+              </motion.div>
+            </TiltCard>
 
             <div className="grid grid-rows-2 gap-6 h-[500px]">
               {[
-                { img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80", title: "Japandi Retreat" },
-                { img: "https://images.unsplash.com/photo-1600210491369-e753d80a41f3?auto=format&fit=crop&q=80", title: "Organic Modern" }
+                { img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80", title: "Japandi Retreat", tag: "Japandi" },
+                { img: "https://images.unsplash.com/photo-1600210491369-e753d80a41f3?auto=format&fit=crop&q=80", title: "Organic Modern", tag: "Biophilic" }
               ].map((style, i) => (
-                <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i + 1) * 0.2, duration: 0.8 }} className="group cursor-pointer rounded-[32px] overflow-hidden relative">
-                  <img src={style.img} alt={style.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                  <div className="absolute bottom-0 left-0 p-8">
-                    <h3 className="font-serif text-2xl text-white">{style.title}</h3>
-                  </div>
-                </motion.div>
+                <TiltCard key={i} depth={10}>
+                  <motion.div
+                    initial={{ opacity: 0, rotateY: 20, x: 40 }} whileInView={{ opacity: 1, rotateY: 0, x: 0 }}
+                    viewport={{ once: true }} transition={{ delay: (i + 1) * 0.2, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                    className="group cursor-pointer rounded-[32px] overflow-hidden relative h-full" style={{ transformStyle: "preserve-3d" }}
+                  >
+                    <img src={style.img} alt={style.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-0 left-0 p-8" style={{ transform: "translateZ(20px)" }}>
+                      <span className="text-[9px] tracking-widest uppercase font-bold bg-white/90 backdrop-blur-md px-3 py-1 inline-block rounded-full text-[#A8765E] mb-2">{style.tag}</span>
+                      <h3 className="font-serif text-2xl text-white">{style.title}</h3>
+                    </div>
+                  </motion.div>
+                </TiltCard>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ────────────────────────────────────────
-          FINAL CTA
-      ──────────────────────────────────────── */}
-      <section className="py-32 px-8 text-center bg-white border-t border-[#EAE6DF]">
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} className="max-w-3xl mx-auto">
-          <div className="w-16 h-16 rounded-full bg-[#F4F1ED] flex items-center justify-center text-[#A8765E] mx-auto mb-8">
-            <Home size={24} strokeWidth={1.5} />
-          </div>
-          <h2 className="font-serif text-5xl md:text-6xl font-light mb-8 text-[#1A1A1A]">
-            Ready to meet your <br /><span className="italic text-[#A8765E]">future home?</span>
-          </h2>
-          <p className="font-sans text-[#666666] text-lg font-light mb-12">
-            Take the 3-minute assessment and unlock a personalized architectural direction — completely free.
-          </p>
-          <MagneticButton
-            onClick={() => setStarted(true)}
-            className="mx-auto group bg-[#A8765E] text-white px-12 py-5 rounded-full font-sans tracking-[0.2em] text-[10px] uppercase hover:bg-[#1A1A1A] transition-colors duration-500 shadow-xl flex items-center gap-4"
+      {/* ═══ FINAL CTA — 3D Floating Card ═══ */}
+      <section className="py-32 px-8 bg-white border-t border-[#EAE6DF]" style={{ perspective: "1400px" }}>
+        <TiltCard depth={8} className="max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, rotateX: -20, y: 60 }} whileInView={{ opacity: 1, rotateX: 0, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="bg-[#FAF9F6] border border-[#EAE6DF] rounded-[40px] p-16 text-center shadow-2xl"
+            style={{ transformStyle: "preserve-3d" }}
           >
-            <span>Start Free Analysis</span>
-            <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
-          </MagneticButton>
-        </motion.div>
+            <div className="w-16 h-16 rounded-full bg-[#F4F1ED] flex items-center justify-center text-[#A8765E] mx-auto mb-8" style={{ transform: "translateZ(30px)" }}>
+              <Home size={24} strokeWidth={1.5} />
+            </div>
+            <h2 className="font-serif text-5xl md:text-6xl font-light mb-8 text-[#1A1A1A]" style={{ transform: "translateZ(20px)" }}>
+              Ready to meet your <br /><span className="italic text-[#A8765E]">future home?</span>
+            </h2>
+            <p className="font-sans text-[#666] text-lg font-light mb-12" style={{ transform: "translateZ(15px)" }}>
+              Take the 3-minute assessment and unlock a personalized architectural direction — completely free.
+            </p>
+            <div style={{ transform: "translateZ(35px)" }}>
+              <MagneticButton
+                onClick={() => setStarted(true)}
+                className="mx-auto group bg-[#A8765E] text-white px-12 py-5 rounded-full font-sans tracking-[0.2em] text-[10px] uppercase hover:bg-[#1A1A1A] transition-colors duration-500 shadow-xl flex items-center gap-4"
+              >
+                <span>Start Free Analysis</span>
+                <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
+              </MagneticButton>
+            </div>
+          </motion.div>
+        </TiltCard>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-[#FAF9F6] text-[#888888] py-12 text-center text-[9px] font-sans tracking-[0.2em] uppercase border-t border-[#EAE6DF]">
+      <footer className="bg-[#FAF9F6] text-[#888] py-12 text-center text-[9px] font-sans tracking-[0.2em] uppercase border-t border-[#EAE6DF]">
         <p>© {new Date().getFullYear()} Home DNA Studio. All Rights Reserved.</p>
       </footer>
     </div>
