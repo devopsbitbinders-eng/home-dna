@@ -189,9 +189,8 @@ export default function HomePage() {
             initial={{ opacity: 0, x: 50, rotateY: 10 }}
             animate={{ opacity: 1, x: 0, rotateY: 0 }}
             transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-            style={{ x: springMouseX, y: springMouseY }}
+            style={{ x: springMouseX, y: springMouseY, background: "linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.4) 100%)" }}
             className="absolute bottom-12 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 lg:-left-4 w-[90%] max-w-md mx-auto right-0 lg:right-auto lg:mx-0 rounded-[32px] border border-white/50 p-10 shadow-[0_40px_80px_rgba(0,0,0,0.15)] backdrop-blur-2xl z-30"
-            style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.4) 100%)" }}
           >
             <div className="flex justify-between items-start mb-8">
               <div>
