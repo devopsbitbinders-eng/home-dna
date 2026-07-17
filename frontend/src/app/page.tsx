@@ -242,9 +242,10 @@ export default function HomePage() {
       </section>
 
       {/* ═══ WHAT YOU GET — Premium Numbered Feature Grid ═══ */}
-      <section className="py-32 px-8 md:px-16 lg:px-24 bg-[#111111] text-white relative overflow-hidden" style={{ perspective: "1200px" }}>
+      <section className="py-32 px-8 md:px-16 lg:px-24 text-white relative overflow-hidden" style={{ perspective: "1200px", background: "linear-gradient(135deg, #1E130C 0%, #2A1A0F 50%, #1A110A 100%)" }}>
         {/* Background decorative glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(168,118,94,0.07) 0%, transparent 70%)" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(200,164,106,0.12) 0%, transparent 70%)" }} />
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(168,118,94,0.08) 0%, transparent 70%)" }} />
 
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Header */}
@@ -262,7 +263,7 @@ export default function HomePage() {
               </h2>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.2 }}>
-              <p className="text-white/40 text-base font-light max-w-sm leading-relaxed border-l border-white/10 pl-6">
+              <p className="text-[#C4A882]/60 text-base font-light max-w-sm leading-relaxed border-l border-[#A8765E]/25 pl-6">
                 A complete architectural brief you can hand directly to any designer or contractor.
               </p>
             </motion.div>
@@ -282,24 +283,24 @@ export default function HomePage() {
                 <motion.div
                   initial={{ opacity: 0, y: 40, rotateX: -15 }} whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                   viewport={{ once: true, margin: "-40px" }} transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative bg-white/[0.04] border border-white/[0.08] rounded-[24px] p-8 group hover:border-[#A8765E]/50 hover:bg-white/[0.07] transition-all duration-500 overflow-hidden h-full flex flex-col"
-                  style={{ transformStyle: "preserve-3d" }}
+                  className="relative border rounded-[24px] p-8 group transition-all duration-500 overflow-hidden h-full flex flex-col"
+                  style={{ background: "rgba(255,240,220,0.04)", borderColor: "rgba(200,164,106,0.15)", transformStyle: "preserve-3d" }}
                 >
                   {/* Top row: icon left, number right */}
                   <div className="flex items-start justify-between mb-6" style={{ transform: "translateZ(20px)" }}>
-                    <div className="w-12 h-12 rounded-2xl bg-white/[0.06] border border-white/[0.10] flex items-center justify-center text-[#A8765E] group-hover:bg-[#A8765E] group-hover:text-white group-hover:border-[#A8765E] transition-all duration-500">
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-[#C8A46A] group-hover:bg-[#A8765E] group-hover:text-white transition-all duration-500" style={{ background: "rgba(200,164,106,0.10)", border: "1px solid rgba(200,164,106,0.22)" }}>
                       {item.icon}
                     </div>
-                    <span className="font-serif text-4xl font-light text-white/[0.06] group-hover:text-[#A8765E]/20 transition-colors duration-500 leading-none">{item.num}</span>
+                    <span className="font-serif text-4xl font-light leading-none transition-colors duration-500" style={{ color: "rgba(200,164,106,0.12)" }}>{item.num}</span>
                   </div>
 
                   {/* Divider */}
-                  <div className="w-full h-[1px] bg-white/[0.07] mb-6 group-hover:bg-[#A8765E]/30 transition-colors duration-500" />
+                  <div className="w-full h-[1px] mb-6 transition-colors duration-500" style={{ background: "rgba(200,164,106,0.15)" }} />
 
                   {/* Content */}
                   <div style={{ transform: "translateZ(14px)" }} className="flex-1">
-                    <h4 className="font-serif text-xl text-white mb-3 group-hover:text-[#C4A882] transition-colors duration-300">{item.title}</h4>
-                    <p className="text-white/40 text-sm font-sans leading-relaxed group-hover:text-white/60 transition-colors duration-300">{item.desc}</p>
+                    <h4 className="font-serif text-xl text-[#EDE0CE] mb-3 group-hover:text-[#C8A46A] transition-colors duration-300">{item.title}</h4>
+                    <p className="text-sm font-sans leading-relaxed transition-colors duration-300" style={{ color: "rgba(196,168,130,0.55)" }}>{item.desc}</p>
                   </div>
 
                   {/* Bottom accent bar */}
