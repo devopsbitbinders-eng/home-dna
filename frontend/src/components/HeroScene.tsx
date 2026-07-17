@@ -211,6 +211,80 @@ function IsometricRoom({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
           </motion.div>
           <div className="absolute bottom-0 left-0 right-0" style={{ height: 6, background: "#D5C5B5" }} />
         </div>
+
+        {/* ── CEILING / ROOF ── */}
+        <motion.div
+          initial={{ opacity: 0, translateZ: 240 }}
+          animate={{ opacity: 1, translateZ: 190 }}
+          transition={{ delay: 1.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute"
+          style={{
+            width: 340, height: 340,
+            background: "linear-gradient(135deg, rgba(248,242,234,0.55) 0%, rgba(238,230,218,0.48) 100%)",
+            transform: "translateZ(190px)",
+            borderTop: "2px solid rgba(200,178,150,0.35)",
+            borderLeft: "2px solid rgba(200,178,150,0.28)",
+            backdropFilter: "blur(2px)",
+          }}
+        >
+          {/* Crown molding edges */}
+          <div style={{ position: "absolute", inset: 0, border: "10px solid rgba(210,190,168,0.25)", pointerEvents: "none" }} />
+          <div style={{ position: "absolute", inset: 10, border: "4px solid rgba(210,190,168,0.15)", pointerEvents: "none" }} />
+
+          {/* Ceiling grid beams */}
+          {[113, 226].map(v => (
+            <div key={`cb${v}`} style={{ position: "absolute", left: v, top: 0, bottom: 0, width: 2, background: "rgba(190,165,135,0.15)" }} />
+          ))}
+          {[113, 226].map(v => (
+            <div key={`cr${v}`} style={{ position: "absolute", top: v, left: 0, right: 0, height: 2, background: "rgba(190,165,135,0.15)" }} />
+          ))}
+
+          {/* Central ceiling rose / medallion */}
+          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 50, height: 50, borderRadius: "50%", border: "2px solid rgba(200,164,106,0.3)", background: "rgba(200,164,106,0.07)", boxShadow: "0 0 20px rgba(200,164,106,0.12)" }} />
+          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 28, height: 28, borderRadius: "50%", border: "1.5px solid rgba(200,164,106,0.25)", background: "rgba(200,164,106,0.08)" }} />
+
+          {/* Pendant cord hole */}
+          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 6, height: 6, borderRadius: "50%", background: "rgba(120,90,60,0.35)" }} />
+
+          {/* Recessed lights — 4 corners */}
+          {[
+            { top: "22%", left: "22%" },
+            { top: "22%", left: "72%" },
+            { top: "72%", left: "22%" },
+            { top: "72%", left: "72%" },
+          ].map((pos, i) => (
+            <motion.div
+              key={i}
+              style={{
+                position: "absolute", top: pos.top, left: pos.left,
+                transform: "translate(-50%,-50%)",
+                width: 14, height: 14, borderRadius: "50%",
+                background: "radial-gradient(circle, rgba(255,230,160,0.7) 0%, rgba(200,164,106,0.2) 60%, transparent 100%)",
+                boxShadow: "0 0 10px 3px rgba(255,220,100,0.18)",
+              }}
+              animate={{ boxShadow: ["0 0 8px 2px rgba(255,220,100,0.14)", "0 0 16px 5px rgba(255,220,100,0.28)", "0 0 8px 2px rgba(255,220,100,0.14)"] }}
+              transition={{ duration: 2.5 + i * 0.4, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
+            />
+          ))}
+
+          {/* Skylight panel — top-left quadrant (above where the window is) */}
+          <motion.div
+            style={{
+              position: "absolute", top: 22, left: 22, width: 90, height: 60,
+              background: "linear-gradient(135deg, rgba(255,245,210,0.55), rgba(240,225,175,0.35))",
+              border: "1.5px solid rgba(200,175,130,0.3)", borderRadius: 3,
+              boxShadow: "inset 0 0 14px rgba(255,220,100,0.2)",
+            }}
+            animate={{ opacity: [0.7, 1, 0.7] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            {/* Skylight pane dividers */}
+            <div style={{ position: "absolute", left: "50%", top: 0, bottom: 0, width: 1, background: "rgba(200,175,130,0.4)", transform: "translateX(-50%)" }} />
+            <div style={{ position: "absolute", top: "50%", left: 0, right: 0, height: 1, background: "rgba(200,175,130,0.4)", transform: "translateY(-50%)" }} />
+            {/* Skylight sheen */}
+            <div style={{ position: "absolute", top: 4, left: 4, width: "35%", height: "35%", background: "rgba(255,255,255,0.4)", borderRadius: 2 }} />
+          </motion.div>
+        </motion.div>
       </motion.div>
     </div>
   );
