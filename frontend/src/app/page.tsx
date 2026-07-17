@@ -241,44 +241,84 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ WHAT YOU GET — 3D Feature Grid ═══ */}
-      <section className="py-32 px-8 md:px-16 lg:px-24 bg-[#1A1A1A] text-white" style={{ perspective: "1200px" }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row justify-between items-end mb-20 gap-8">
-            <motion.div initial={{ opacity: 0, rotateY: -15, x: -40 }} whileInView={{ opacity: 1, rotateY: 0, x: 0 }} viewport={{ once: true }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }} style={{ transformStyle: "preserve-3d" }}>
+      {/* ═══ WHAT YOU GET — Premium Numbered Feature Grid ═══ */}
+      <section className="py-32 px-8 md:px-16 lg:px-24 bg-[#111111] text-white relative overflow-hidden" style={{ perspective: "1200px" }}>
+        {/* Background decorative glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(168,118,94,0.07) 0%, transparent 70%)" }} />
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* Header */}
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-20 gap-10">
+            <motion.div
+              initial={{ opacity: 0, rotateY: -15, x: -40 }} whileInView={{ opacity: 1, rotateY: 0, x: 0 }}
+              viewport={{ once: true }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              style={{ transformStyle: "preserve-3d" }}
+            >
               <p className="text-[#A8765E] text-[10px] tracking-[0.35em] uppercase font-bold mb-5 flex items-center gap-3">
                 <span className="w-8 h-[1.5px] bg-[#A8765E]" />Your Report Includes
               </p>
-              <h2 className="font-serif text-4xl md:text-5xl font-light leading-tight">Everything You <br /><span className="italic text-[#A8765E]">Need to Build.</span></h2>
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light leading-tight">
+                Everything You <br /><span className="italic text-[#A8765E]">Need to Build.</span>
+              </h2>
             </motion.div>
-            <motion.p initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.2 }} className="text-white/50 text-lg font-light max-w-md">A complete architectural brief you can hand directly to any designer or contractor.</motion.p>
+            <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.2 }}>
+              <p className="text-white/40 text-base font-light max-w-sm leading-relaxed border-l border-white/10 pl-6">
+                A complete architectural brief you can hand directly to any designer or contractor.
+              </p>
+            </motion.div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {/* Feature Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
-              { icon: <Home size={20} strokeWidth={1} />, title: "Interior Personality", desc: "Your exact aesthetic language" },
-              { icon: <Palette size={20} strokeWidth={1} />, title: "Colour Palette", desc: "Harmonious, curated tones" },
-              { icon: <Armchair size={20} strokeWidth={1} />, title: "Furniture Style", desc: "Curated profiles for you" },
-              { icon: <Sun size={20} strokeWidth={1} />, title: "Lighting Plan", desc: "Illumination for your routine" },
-              { icon: <Coins size={20} strokeWidth={1} />, title: "Budget Estimate", desc: "Realistic ₹ projections" },
-              { icon: <Box size={20} strokeWidth={1} />, title: "Storage Strategy", desc: "Built around your habits" },
+              { icon: <Home size={22} strokeWidth={1} />, num: "01", title: "Interior Personality", desc: "Your exact aesthetic language and architectural identity — defined clearly and concisely." },
+              { icon: <Palette size={22} strokeWidth={1} />, num: "02", title: "Colour Palette", desc: "A harmonious set of curated tones perfectly matched to your mood and lifestyle." },
+              { icon: <Armchair size={22} strokeWidth={1} />, num: "03", title: "Furniture Style", desc: "Curated furniture profiles that align with your comfort preferences and spatial scale." },
+              { icon: <Sun size={22} strokeWidth={1} />, num: "04", title: "Lighting Plan", desc: "Ambient, task, and accent lighting recommendations tailored to your daily routine." },
+              { icon: <Coins size={22} strokeWidth={1} />, num: "05", title: "Budget Estimate", desc: "Realistic Indian Rupee (₹) projections based on your property size and finish level." },
+              { icon: <Box size={22} strokeWidth={1} />, num: "06", title: "Storage Strategy", desc: "Smart storage recommendations built entirely around your lifestyle and habits." },
             ].map((item, i) => (
-              <TiltCard key={i} depth={15}>
+              <TiltCard key={i} depth={14}>
                 <motion.div
-                  initial={{ opacity: 0, y: 30, rotateX: -15 }} whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                  viewport={{ once: true, margin: "-40px" }} transition={{ delay: i * 0.08, duration: 0.8 }}
-                  className="bg-white/5 border border-white/10 rounded-[24px] p-8 hover:bg-white/10 hover:border-[#A8765E]/40 transition-all duration-500 group h-full"
+                  initial={{ opacity: 0, y: 40, rotateX: -15 }} whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                  viewport={{ once: true, margin: "-40px" }} transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  className="relative bg-white/[0.04] border border-white/[0.08] rounded-[24px] p-8 group hover:border-[#A8765E]/50 hover:bg-white/[0.07] transition-all duration-500 overflow-hidden h-full flex flex-col"
                   style={{ transformStyle: "preserve-3d" }}
                 >
-                  <div className="text-[#A8765E] mb-5 group-hover:scale-110 transition-transform duration-300" style={{ transform: "translateZ(25px)" }}>
-                    {item.icon}
+                  {/* Top row: icon left, number right */}
+                  <div className="flex items-start justify-between mb-6" style={{ transform: "translateZ(20px)" }}>
+                    <div className="w-12 h-12 rounded-2xl bg-white/[0.06] border border-white/[0.10] flex items-center justify-center text-[#A8765E] group-hover:bg-[#A8765E] group-hover:text-white group-hover:border-[#A8765E] transition-all duration-500">
+                      {item.icon}
+                    </div>
+                    <span className="font-serif text-4xl font-light text-white/[0.06] group-hover:text-[#A8765E]/20 transition-colors duration-500 leading-none">{item.num}</span>
                   </div>
-                  <h4 className="font-serif text-xl text-white mb-2" style={{ transform: "translateZ(18px)" }}>{item.title}</h4>
-                  <p className="text-white/40 text-xs font-sans leading-relaxed" style={{ transform: "translateZ(12px)" }}>{item.desc}</p>
+
+                  {/* Divider */}
+                  <div className="w-full h-[1px] bg-white/[0.07] mb-6 group-hover:bg-[#A8765E]/30 transition-colors duration-500" />
+
+                  {/* Content */}
+                  <div style={{ transform: "translateZ(14px)" }} className="flex-1">
+                    <h4 className="font-serif text-xl text-white mb-3 group-hover:text-[#C4A882] transition-colors duration-300">{item.title}</h4>
+                    <p className="text-white/40 text-sm font-sans leading-relaxed group-hover:text-white/60 transition-colors duration-300">{item.desc}</p>
+                  </div>
+
+                  {/* Bottom accent bar */}
+                  <div className="mt-8 w-0 h-[1.5px] bg-[#A8765E] group-hover:w-full transition-all duration-700 ease-out rounded-full" style={{ transform: "translateZ(8px)" }} />
+
+                  {/* Corner glow on hover */}
+                  <div className="absolute -top-10 -right-10 w-24 h-24 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: "radial-gradient(circle, rgba(168,118,94,0.15), transparent)" }} />
                 </motion.div>
               </TiltCard>
             ))}
           </div>
+
+          {/* Bottom CTA nudge */}
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.6, duration: 0.8 }} className="flex justify-center mt-16">
+            <MagneticButton onClick={() => setStarted(true)} className="group flex items-center gap-3 text-[#A8765E] text-[10px] tracking-[0.2em] uppercase font-bold hover:text-white transition-colors duration-300">
+              <span>Get Your Full Report</span>
+              <ArrowRight size={13} className="group-hover:translate-x-2 transition-transform" />
+            </MagneticButton>
+          </motion.div>
         </div>
       </section>
 
