@@ -429,10 +429,10 @@ export default function AssessmentForm() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="max-w-md w-full mx-auto bg-[#F4F1ED] text-[#1A1A1A] p-10 rounded-[32px] shadow-[10px_20px_50px_rgba(0,0,0,0.3)] border border-white/50 relative z-10"
+                className={currentStep === 1 ? "max-w-6xl w-full mx-auto relative z-10" : "max-w-md w-full mx-auto bg-[#F4F1ED] text-[#1A1A1A] p-10 rounded-[32px] shadow-[10px_20px_50px_rgba(0,0,0,0.3)] border border-white/50 relative z-10"}
               >
               
-              <div className="mb-8">
+              <div className={currentStep === 1 ? "bg-[#F4F1ED] text-[#1A1A1A] p-8 rounded-[32px] shadow-[10px_20px_50px_rgba(0,0,0,0.3)] border border-white/50 mb-8 max-w-md mx-auto text-center" : "mb-8"} >
                 <p className="text-[10px] tracking-[0.3em] uppercase mb-2 transition-colors duration-1000 text-[#A8765E]">{SCREEN_TITLES[currentStep]}</p>
                 {currentStep === 0 && (
                   <>
@@ -536,14 +536,15 @@ export default function AssessmentForm() {
               )}
 
               {currentStep === 1 && (
-                <div className="space-y-12">
-                  <div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Card 1: Property Type */}
+                  <div className="bg-[#F4F1ED] text-[#1A1A1A] p-8 rounded-[32px] shadow-[10px_20px_50px_rgba(0,0,0,0.3)] border border-white/50 flex flex-col justify-start">
                     <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-5 font-medium">Property Type</p>
                     <div className="flex flex-wrap gap-3">
                       {["Apartment", "Villa", "Bungalow", "Penthouse", "Office", "Commercial", "Retail", "Restaurant", "Clinic", "Factory Office", "Warehouse Office"].map(opt => (
                         <button
                           key={opt} onClick={() => handleInput("property_type", opt)}
-                          className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border ${responses.property_type === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
+                          className={`px-4 py-2 rounded-full text-xs tracking-wide transition-all border ${responses.property_type === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                           style={{ 
                             backgroundColor: responses.property_type === opt ? '#A8765E' : 'transparent',
                             borderColor: responses.property_type === opt ? '#A8765E' : `#C5BCB1`,
@@ -559,56 +560,60 @@ export default function AssessmentForm() {
                       placeholder="Or specify other..."
                       value={responses.custom_property_type || ""}
                       onChange={(e) => handleInput("custom_property_type", e.target.value)}
-                      className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#A8765E] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
+                      className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#A8765E] transition-colors font-light mt-auto pt-3 placeholder-[#888888] text-[#1A1A1A]"
                     />
                   </div>
 
-                  <div>
-                    <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-5 font-medium">Property Status</p>
-                    <div className="flex flex-wrap gap-3">
-                      {["Already Owned", "Buying Soon", "Under Construction", "Planning"].map(opt => (
-                        <button
-                          key={opt} onClick={() => handleInput("property_status", opt)}
-                          className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border ${responses.property_status === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
-                          style={{ 
-                            backgroundColor: responses.property_status === opt ? '#A8765E' : 'transparent',
-                            borderColor: responses.property_status === opt ? '#A8765E' : `#C5BCB1`,
-                            color: responses.property_status === opt ? '#fff' : '#1A1A1A'
-                          }}
-                        >
-                          {opt}
-                        </button>
-                      ))}
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Or specify other..."
-                      value={responses.custom_property_status || ""}
-                      onChange={(e) => handleInput("custom_property_status", e.target.value)}
-                      className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#A8765E] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
-                    />
-                  </div>
-
-                  <div className="flex items-center justify-between p-4 rounded-2xl border border-[#C5BCB1] bg-[#EAE6DF]/50">
+                  {/* Card 2: Property Status + Renovation Required */}
+                  <div className="bg-[#F4F1ED] text-[#1A1A1A] p-8 rounded-[32px] shadow-[10px_20px_50px_rgba(0,0,0,0.3)] border border-white/50 flex flex-col justify-between">
                     <div>
-                      <p className="text-xs tracking-[0.1em] uppercase font-medium text-[#1A1A1A]">Is Renovation Required?</p>
-                      <p className="text-[10px] opacity-60 mt-1">Check this if you require civil work or structural changes.</p>
+                      <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-5 font-medium">Property Status</p>
+                      <div className="flex flex-wrap gap-3">
+                        {["Already Owned", "Buying Soon", "Under Construction", "Planning"].map(opt => (
+                          <button
+                            key={opt} onClick={() => handleInput("property_status", opt)}
+                            className={`px-4 py-2 rounded-full text-xs tracking-wide transition-all border ${responses.property_status === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
+                            style={{ 
+                              backgroundColor: responses.property_status === opt ? '#A8765E' : 'transparent',
+                              borderColor: responses.property_status === opt ? '#A8765E' : `#C5BCB1`,
+                              color: responses.property_status === opt ? '#fff' : '#1A1A1A'
+                            }}
+                          >
+                            {opt}
+                          </button>
+                        ))}
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="Or specify other..."
+                        value={responses.custom_property_status || ""}
+                        onChange={(e) => handleInput("custom_property_status", e.target.value)}
+                        className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#A8765E] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
+                      />
                     </div>
-                    <button 
-                      onClick={() => handleInput("is_renovation_required", responses.is_renovation_required === "Yes" ? "No" : "Yes")}
-                      className={`relative w-12 h-6 rounded-full transition-colors duration-300 ${responses.is_renovation_required === "Yes" ? "bg-[#A8765E]" : "bg-[#C5BCB1]"}`}
-                    >
-                      <div className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-transform duration-300 ${responses.is_renovation_required === "Yes" ? "translate-x-6" : "translate-x-0"}`} />
-                    </button>
+
+                    <div className="mt-8 pt-6 border-t border-[#C5BCB1]/30 flex items-center justify-between">
+                      <div>
+                        <p className="text-xs tracking-[0.1em] uppercase font-medium text-[#1A1A1A]">Is Renovation Required?</p>
+                        <p className="text-[10px] opacity-60 mt-1 leading-tight">Check this if you require civil work or structural changes.</p>
+                      </div>
+                      <button 
+                        onClick={() => handleInput("is_renovation_required", responses.is_renovation_required === "Yes" ? "No" : "Yes")}
+                        className={`relative w-12 h-6 rounded-full transition-colors duration-300 flex-shrink-0 ml-4 ${responses.is_renovation_required === "Yes" ? "bg-[#A8765E]" : "bg-[#C5BCB1]"}`}
+                      >
+                        <div className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-transform duration-300 ${responses.is_renovation_required === "Yes" ? "translate-x-6" : "translate-x-0"}`} />
+                      </button>
+                    </div>
                   </div>
 
-                  <div>
+                  {/* Card 3: Renovation Type */}
+                  <div className="bg-[#F4F1ED] text-[#1A1A1A] p-8 rounded-[32px] shadow-[10px_20px_50px_rgba(0,0,0,0.3)] border border-white/50 flex flex-col justify-start">
                     <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-5 font-medium">Renovation Type</p>
                     <div className="flex flex-wrap gap-3">
                       {["New Interior", "Renovation", "Partial Renovation", "Only Modular Kitchen", "Office Renovation", "Commercial Fit-out"].map(opt => (
                         <button
                           key={opt} onClick={() => handleInput("renovation_type", opt)}
-                          className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border ${responses.renovation_type === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
+                          className={`px-4 py-2 rounded-full text-xs tracking-wide transition-all border ${responses.renovation_type === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                           style={{ 
                             backgroundColor: responses.renovation_type === opt ? '#A8765E' : 'transparent',
                             borderColor: responses.renovation_type === opt ? '#A8765E' : `#C5BCB1`,
@@ -621,41 +626,46 @@ export default function AssessmentForm() {
                     </div>
                   </div>
 
-                  <div>
-                    <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-5 font-medium">Budget</p>
-                    <div className="flex flex-wrap gap-3">
-                      {["5-10L", "10-20L", "20-35L", "35-50L", "50L+"].map(opt => (
-                        <button
-                          key={opt} onClick={() => handleInput("budget", opt)}
-                          className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border ${responses.budget === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
-                          style={{ 
-                            backgroundColor: responses.budget === opt ? '#A8765E' : 'transparent',
-                            borderColor: responses.budget === opt ? '#A8765E' : `#C5BCB1`,
-                            color: responses.budget === opt ? '#fff' : '#1A1A1A'
-                          }}
-                        >
-                          {opt}
-                        </button>
-                      ))}
+                  {/* Bottom Row - Centered */}
+                  <div className="lg:col-span-3 flex flex-col md:flex-row justify-center gap-6 mt-2">
+                    {/* Card 4: Budget */}
+                    <div className="bg-[#F4F1ED] text-[#1A1A1A] p-8 rounded-[32px] shadow-[10px_20px_50px_rgba(0,0,0,0.3)] border border-white/50 w-full md:w-[350px]">
+                      <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-5 font-medium">Budget</p>
+                      <div className="flex flex-wrap gap-3 justify-center">
+                        {["5-10L", "10-20L", "20-35L", "35-50L", "50L+"].map(opt => (
+                          <button
+                            key={opt} onClick={() => handleInput("budget", opt)}
+                            className={`px-5 py-2.5 rounded-full text-xs tracking-wide transition-all border ${responses.budget === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
+                            style={{ 
+                              backgroundColor: responses.budget === opt ? '#A8765E' : 'transparent',
+                              borderColor: responses.budget === opt ? '#A8765E' : `#C5BCB1`,
+                              color: responses.budget === opt ? '#fff' : '#1A1A1A'
+                            }}
+                          >
+                            {opt}
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
 
-                  <div>
-                    <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-5 font-medium">Timeline</p>
-                    <div className="flex flex-wrap gap-3">
-                      {["Immediately", "Within 3 months", "6 months", "1 year", "Just Exploring"].map(opt => (
-                        <button
-                          key={opt} onClick={() => handleInput("timeline", opt)}
-                          className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border ${responses.timeline === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
-                          style={{ 
-                            backgroundColor: responses.timeline === opt ? '#A8765E' : 'transparent',
-                            borderColor: responses.timeline === opt ? '#A8765E' : `#C5BCB1`,
-                            color: responses.timeline === opt ? '#fff' : '#1A1A1A'
-                          }}
-                        >
-                          {opt}
-                        </button>
-                      ))}
+                    {/* Card 5: Timeline */}
+                    <div className="bg-[#F4F1ED] text-[#1A1A1A] p-8 rounded-[32px] shadow-[10px_20px_50px_rgba(0,0,0,0.3)] border border-white/50 w-full md:w-[350px]">
+                      <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-5 font-medium">Timeline</p>
+                      <div className="flex flex-wrap gap-3 justify-center">
+                        {["Immediately", "Within 3 months", "6 months", "1 year", "Just Exploring"].map(opt => (
+                          <button
+                            key={opt} onClick={() => handleInput("timeline", opt)}
+                            className={`px-5 py-2.5 rounded-full text-xs tracking-wide transition-all border ${responses.timeline === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
+                            style={{ 
+                              backgroundColor: responses.timeline === opt ? '#A8765E' : 'transparent',
+                              borderColor: responses.timeline === opt ? '#A8765E' : `#C5BCB1`,
+                              color: responses.timeline === opt ? '#fff' : '#1A1A1A'
+                            }}
+                          >
+                            {opt}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
