@@ -2,7 +2,7 @@
 
 import { useState, useRef, ReactNode } from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
-import { ArrowRight, Sparkles, Compass, Key, Hexagon, Play } from "lucide-react";
+import { ArrowRight, Sparkles, Compass, Key, Hexagon, Play, Home } from "lucide-react";
 import AssessmentForm from "@/components/AssessmentForm";
 
 // MAGNETIC BUTTON
