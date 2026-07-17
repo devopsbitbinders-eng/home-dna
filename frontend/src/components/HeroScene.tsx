@@ -1,128 +1,181 @@
 "use client";
 
-import { useRef, useMemo } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { MeshTransmissionMaterial, Float, Stars, Environment } from "@react-three/drei";
-import * as THREE from "three";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
 
-// Floating Crystal Gem
-function Crystal() {
-  const meshRef = useRef<THREE.Mesh>(null!);
-  const { mouse } = useThree();
+// Single floating orb/particle
+function Particle({ delay, x, y, size, opacity }: { delay: number; x: string; y: string; size: number; opacity: number }) {
+  return (
+    <motion.div
+      className="absolute rounded-full pointer-events-none"
+      style={{
+        left: x, top: y, width: size, height: size,
+        background: `radial-gradient(circle, rgba(168,118,94,${opacity}) 0%, transparent 70%)`,
+      }}
+      animate={{ y: [0, -24, 0], opacity: [opacity * 0.4, opacity, opacity * 0.4], scale: [0.8, 1.1, 0.8] }}
+      transition={{ duration: 4 + delay, repeat: Infinity, ease: "easeInOut", delay }}
+    />
+  );
+}
 
-  useFrame((state) => {
-    if (!meshRef.current) return;
-    meshRef.current.rotation.y += 0.003;
-    meshRef.current.rotation.x += 0.001;
-    // Subtle mouse parallax
-    meshRef.current.rotation.y += mouse.x * 0.0008;
-    meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, mouse.x * 0.5, 0.02);
-    meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, mouse.y * 0.3, 0.02);
-  });
+// CSS 3D rotating crystal using perspective transforms
+function Crystal3D({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
+  const rotX = useSpring(mouseY * -18, { stiffness: 60, damping: 20 });
+  const rotY = useSpring(mouseX * 18, { stiffness: 60, damping: 20 });
 
   return (
-    <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.8}>
-      <mesh ref={meshRef} scale={1.6}>
-        <icosahedronGeometry args={[1, 1]} />
-        <MeshTransmissionMaterial
-          backside
-          samples={8}
-          thickness={0.5}
-          anisotropicBlur={0.1}
-          chromaticAberration={0.5}
-          distortion={0.1}
-          temporalDistortion={0.05}
-          color="#C8A46A"
-          transmission={0.95}
-          roughness={0.05}
-          envMapIntensity={1.5}
+    <div className="absolute inset-0 flex items-center justify-center" style={{ perspective: "900px" }}>
+      <motion.div
+        style={{ rotateX: rotX, rotateY: rotY, transformStyle: "preserve-3d" }}
+        animate={{ rotateZ: [0, 360] }}
+        transition={{ rotateZ: { duration: 30, repeat: Infinity, ease: "linear" } }}
+        className="relative w-56 h-56 md:w-72 md:h-72"
+      >
+        {/* Core glowing sphere */}
+        <div
+          className="absolute inset-0 rounded-full"
+          style={{
+            background: "radial-gradient(circle at 35% 35%, rgba(255,240,210,0.95), rgba(200,164,106,0.6) 50%, rgba(139,106,79,0.15) 100%)",
+            boxShadow: "0 0 60px 20px rgba(200,164,106,0.25), 0 0 120px 40px rgba(168,118,94,0.12), inset 0 0 40px rgba(255,255,255,0.3)",
+          }}
         />
-      </mesh>
-    </Float>
+
+        {/* Facet overlays simulating icosahedron faces */}
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute inset-0 rounded-full"
+            style={{
+              background: `conic-gradient(from ${i * 60}deg, transparent 0deg, rgba(200,164,106,0.08) 30deg, transparent 60deg)`,
+              mixBlendMode: "screen",
+            }}
+            animate={{ rotate: [i % 2 === 0 ? 0 : 360, i % 2 === 0 ? 360 : 0] }}
+            transition={{ duration: 10 + i * 3, repeat: Infinity, ease: "linear" }}
+          />
+        ))}
+
+        {/* Specular highlight */}
+        <div
+          className="absolute rounded-full"
+          style={{
+            width: "40%", height: "30%", top: "12%", left: "18%",
+            background: "radial-gradient(ellipse, rgba(255,255,255,0.7) 0%, transparent 100%)",
+            filter: "blur(4px)",
+          }}
+        />
+      </motion.div>
+    </div>
   );
 }
 
-// Floating Wireframe Ring
-function Ring() {
-  const ringRef = useRef<THREE.Mesh>(null!);
-  useFrame((state) => {
-    if (!ringRef.current) return;
-    ringRef.current.rotation.z = state.clock.elapsedTime * 0.15;
-    ringRef.current.rotation.x = Math.PI / 3 + Math.sin(state.clock.elapsedTime * 0.3) * 0.1;
-  });
+// Rotating orbital ring
+function OrbitalRing({ radius, duration, tiltX, tiltZ, color, opacity }: {
+  radius: number; duration: number; tiltX: number; tiltZ: number; color: string; opacity: number;
+}) {
   return (
-    <mesh ref={ringRef} position={[0, 0, -1.5]}>
-      <torusGeometry args={[2.8, 0.012, 4, 80]} />
-      <meshBasicMaterial color="#C8A46A" transparent opacity={0.25} />
-    </mesh>
+    <div
+      className="absolute inset-0 flex items-center justify-center pointer-events-none"
+      style={{ perspective: "900px" }}
+    >
+      <motion.div
+        className="rounded-full border"
+        style={{
+          width: radius * 2, height: radius * 2,
+          borderColor: color,
+          borderWidth: 1,
+          opacity,
+          rotateX: tiltX,
+          rotateZ: tiltZ,
+          transformStyle: "preserve-3d",
+          boxShadow: `0 0 8px 0 ${color}`,
+        }}
+        animate={{ rotateZ: [tiltZ, tiltZ + 360] }}
+        transition={{ duration, repeat: Infinity, ease: "linear" }}
+      />
+    </div>
   );
 }
 
-// Outer slow ring
-function OuterRing() {
-  const ringRef = useRef<THREE.Mesh>(null!);
-  useFrame((state) => {
-    if (!ringRef.current) return;
-    ringRef.current.rotation.z = -state.clock.elapsedTime * 0.07;
-    ringRef.current.rotation.x = Math.PI / 4;
-  });
+// Orbiting dot on a ring
+function OrbitingDot({ radius, duration, startAngle, color }: {
+  radius: number; duration: number; startAngle: number; color: string;
+}) {
   return (
-    <mesh ref={ringRef} position={[0, 0, -1.5]}>
-      <torusGeometry args={[3.8, 0.006, 4, 100]} />
-      <meshBasicMaterial color="#A8765E" transparent opacity={0.12} />
-    </mesh>
-  );
-}
-
-// Floating Particles
-function Particles() {
-  const count = 120;
-  const positions = useMemo(() => {
-    const pos = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 14;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 10;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 8;
-    }
-    return pos;
-  }, []);
-
-  const pointsRef = useRef<THREE.Points>(null!);
-  useFrame((state) => {
-    if (!pointsRef.current) return;
-    pointsRef.current.rotation.y = state.clock.elapsedTime * 0.025;
-  });
-
-  return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
-      </bufferGeometry>
-      <pointsMaterial size={0.025} color="#C8A46A" transparent opacity={0.6} sizeAttenuation />
-    </points>
+    <motion.div
+      className="absolute rounded-full"
+      style={{ width: 6, height: 6, background: color, boxShadow: `0 0 8px 4px ${color}`, top: "50%", left: "50%", marginTop: -3, marginLeft: -3 }}
+      animate={{
+        x: [
+          Math.cos((startAngle * Math.PI) / 180) * radius,
+          Math.cos(((startAngle + 120) * Math.PI) / 180) * radius,
+          Math.cos(((startAngle + 240) * Math.PI) / 180) * radius,
+          Math.cos((startAngle * Math.PI) / 180) * radius,
+        ],
+        y: [
+          Math.sin((startAngle * Math.PI) / 180) * radius,
+          Math.sin(((startAngle + 120) * Math.PI) / 180) * radius,
+          Math.sin(((startAngle + 240) * Math.PI) / 180) * radius,
+          Math.sin((startAngle * Math.PI) / 180) * radius,
+        ],
+      }}
+      transition={{ duration, repeat: Infinity, ease: "linear" }}
+    />
   );
 }
 
 export default function HeroScene() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const handleMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      setMouse({
+        x: ((e.clientX - rect.left) / rect.width - 0.5) * 2,
+        y: ((e.clientY - rect.top) / rect.height - 0.5) * 2,
+      });
+    };
+    window.addEventListener("mousemove", handleMove);
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, []);
+
+  const particles = [
+    { delay: 0, x: "10%", y: "20%", size: 80, opacity: 0.5 },
+    { delay: 1, x: "75%", y: "10%", size: 50, opacity: 0.4 },
+    { delay: 2, x: "85%", y: "65%", size: 70, opacity: 0.35 },
+    { delay: 0.5, x: "20%", y: "75%", size: 60, opacity: 0.45 },
+    { delay: 1.5, x: "60%", y: "80%", size: 40, opacity: 0.3 },
+    { delay: 3, x: "5%", y: "50%", size: 35, opacity: 0.25 },
+    { delay: 2.5, x: "90%", y: "35%", size: 45, opacity: 0.3 },
+  ];
+
   return (
-    <div className="w-full h-full absolute inset-0 pointer-events-none">
-      <Canvas
-        camera={{ position: [0, 0, 6], fov: 45 }}
-        gl={{ antialias: true, alpha: true }}
-        dpr={[1, 2]}
-      >
-        <ambientLight intensity={0.4} />
-        <directionalLight position={[5, 5, 5]} intensity={1.2} color="#fff8f0" />
-        <pointLight position={[-5, -3, 2]} intensity={0.8} color="#C8A46A" />
-        <pointLight position={[5, 3, -2]} intensity={0.5} color="#8B6A4F" />
-        
-        <Environment preset="sunset" />
-        
-        <Crystal />
-        <Ring />
-        <OuterRing />
-        <Particles />
-      </Canvas>
+    <div ref={containerRef} className="w-full h-full absolute inset-0 overflow-hidden">
+      {/* Warm gradient base */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#F9EFE6] via-[#FAF6F0] to-[#EDE4D8]" />
+
+      {/* Ambient glow at center */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+        style={{ width: 500, height: 500, background: "radial-gradient(circle, rgba(200,164,106,0.18) 0%, transparent 70%)" }}
+      />
+
+      {/* Floating particles */}
+      {particles.map((p, i) => <Particle key={i} {...p} />)}
+
+      {/* Orbital rings */}
+      <OrbitalRing radius={180} duration={14} tiltX={65} tiltZ={20} color="rgba(200,164,106,0.5)" opacity={0.6} />
+      <OrbitalRing radius={220} duration={20} tiltX={45} tiltZ={-30} color="rgba(168,118,94,0.4)" opacity={0.4} />
+      <OrbitalRing radius={260} duration={28} tiltX={75} tiltZ={10} color="rgba(200,164,106,0.25)" opacity={0.3} />
+
+      {/* Orbiting glowing dots */}
+      <OrbitingDot radius={170} duration={8} startAngle={0} color="rgba(200,164,106,0.9)" />
+      <OrbitingDot radius={210} duration={13} startAngle={120} color="rgba(255,220,160,0.7)" />
+
+      {/* Main 3D Crystal */}
+      <Crystal3D mouseX={mouse.x} mouseY={mouse.y} />
     </div>
   );
 }
