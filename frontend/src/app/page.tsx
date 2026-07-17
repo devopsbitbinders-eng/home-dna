@@ -101,6 +101,16 @@ export default function HomePage() {
   const yHero = useTransform(scrollYProgress, [0, 0.5], [0, 150]);
   const { springX, springY } = useMouseParallax();
 
+  // Declare ALL useTransform values at top level — never inside JSX (Rules of Hooks)
+  const navX = useTransform(springX, (v: number) => v * -8);
+  const navY = useTransform(springY, (v: number) => v * -4);
+  const h1X = useTransform(springX, (v: number) => v * -18);
+  const h1Y = useTransform(springY, (v: number) => v * -10);
+  const subX = useTransform(springX, (v: number) => v * -8);
+  const subY = useTransform(springY, (v: number) => v * -4);
+  const statsX = useTransform(springX, (v: number) => v * -4);
+  const statsY = useTransform(springY, (v: number) => v * -2);
+
   if (started) return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8 }}>
       <AssessmentForm />
@@ -112,7 +122,7 @@ export default function HomePage() {
 
       {/* NAVBAR */}
       <nav className="absolute top-0 w-full px-8 md:px-16 py-8 flex justify-between items-center z-50">
-        <motion.div style={{ x: useTransform(springX, v => v * -8), y: useTransform(springY, v => v * -4) }} className="flex items-center gap-3 cursor-pointer group">
+        <motion.div style={{ x: navX, y: navY }} className="flex items-center gap-3 cursor-pointer group">
           <div className="w-8 h-8 flex items-center justify-center border border-[#1A1A1A]/20 rounded-full group-hover:border-[#A8765E] transition-colors duration-300">
             <div className="w-2.5 h-2.5 bg-[#1A1A1A] rounded-full group-hover:bg-[#A8765E] transition-colors duration-300" />
           </div>
@@ -132,7 +142,7 @@ export default function HomePage() {
           <motion.h1
             initial={{ opacity: 0, y: 50, rotateX: -20 }} animate={{ opacity: 1, y: 0, rotateX: 0 }}
             transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            style={{ x: useTransform(springX, v => v * -18), y: useTransform(springY, v => v * -10), transformStyle: "preserve-3d", perspective: 600 }}
+            style={{ x: h1X, y: h1Y, transformStyle: "preserve-3d", perspective: 600 }}
             className="font-serif text-6xl md:text-7xl lg:text-[88px] font-light leading-[1.05] mb-8 text-[#1A1A1A] tracking-tight"
           >
             Curate Your <br />
@@ -142,7 +152,7 @@ export default function HomePage() {
           {/* Subtext */}
           <motion.p
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }}
-            style={{ x: useTransform(springX, v => v * -8), y: useTransform(springY, v => v * -4) }}
+            style={{ x: subX, y: subY }}
             className="font-sans text-[#555555] text-lg md:text-xl font-light leading-relaxed mb-12 max-w-lg"
           >
             Move beyond generic moodboards. Unlock the interior language that is inherently, uniquely yours — powered by AI.
@@ -162,7 +172,7 @@ export default function HomePage() {
           {/* Stats — shallowest parallax */}
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2, duration: 1 }}
-            style={{ x: useTransform(springX, v => v * -4), y: useTransform(springY, v => v * -2) }}
+            style={{ x: statsX, y: statsY }}
             className="flex gap-10 mt-16 pt-10 border-t border-[#E5DED5]"
           >
             {[["500+", "Projects"], ["98%", "Match Rate"], ["3 min", "Assessment"]].map(([val, label]) => (
