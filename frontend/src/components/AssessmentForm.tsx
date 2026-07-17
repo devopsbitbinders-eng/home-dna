@@ -113,7 +113,8 @@ export default function AssessmentForm() {
   const submitAssessment = async () => {
     setIsSubmitting(true);
     try {
-      const response = await fetch("http://localhost:8000/submit-assessment", {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      const response = await fetch(`${API_URL}/submit-assessment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -146,7 +147,8 @@ export default function AssessmentForm() {
     }
     setBookingLoading(true);
     try {
-      const response = await fetch("http://localhost:8000/book-consultation", {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      const response = await fetch(`${API_URL}/book-consultation`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
