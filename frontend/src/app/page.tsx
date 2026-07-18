@@ -132,7 +132,7 @@ export default function HomePage() {
       <section className="relative min-h-screen flex flex-col lg:flex-row overflow-hidden" style={{ perspective: "1200px" }}>
 
         {/* Left: Text — Mouse Parallax layers */}
-        <div className="w-full lg:w-[52%] flex flex-col justify-center px-8 md:px-16 lg:pl-24 lg:pr-8 z-20 pt-48 pb-16 lg:pt-0 lg:pb-0">
+        <div className="w-full lg:w-[52%] flex flex-col justify-center px-8 md:px-16 lg:pl-24 lg:pr-8 z-20 pt-48 lg:pt-48 pb-16 lg:pb-16">
 
 
           {/* 3D Heading — deepest parallax layer */}
