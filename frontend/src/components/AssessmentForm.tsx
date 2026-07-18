@@ -411,7 +411,7 @@ export default function AssessmentForm() {
           </div>
           <div className="w-full h-[3px] overflow-hidden bg-black/20 rounded-full">
             <motion.div
-              className="h-full bg-[#A8765E]"
+              className="h-full bg-[#CB5A35]"
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -429,11 +429,11 @@ export default function AssessmentForm() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className={currentStep === 1 ? "max-w-6xl w-full mx-auto relative z-10" : "max-w-md w-full mx-auto bg-[#F4F1ED] text-[#1A1A1A] p-10 rounded-[32px] shadow-[10px_20px_50px_rgba(0,0,0,0.3)] border border-white/50 relative z-10"}
+                className={currentStep === 1 ? "max-w-6xl w-full mx-auto relative z-10" : "max-w-md w-full mx-auto bg-[#F2EFE8] text-[#1A1A1A] p-10 rounded-[32px] shadow-[10px_20px_50px_rgba(0,0,0,0.3)] border border-white/50 relative z-10"}
               >
               
-              <div className={currentStep === 1 ? "bg-[#F4F1ED] text-[#1A1A1A] p-8 rounded-[32px] shadow-[10px_20px_50px_rgba(0,0,0,0.3)] border border-white/50 mb-8 max-w-md mx-auto text-center" : "mb-8"} >
-                <p className="text-[10px] tracking-[0.3em] uppercase mb-2 transition-colors duration-1000 text-[#A8765E]">{SCREEN_TITLES[currentStep]}</p>
+              <div className={currentStep === 1 ? "bg-[#F2EFE8] text-[#1A1A1A] p-8 rounded-[32px] shadow-[10px_20px_50px_rgba(0,0,0,0.3)] border border-white/50 mb-8 max-w-md mx-auto text-center" : "mb-8"} >
+                <p className="text-[10px] tracking-[0.3em] uppercase mb-2 transition-colors duration-1000 text-[#CB5A35]">{SCREEN_TITLES[currentStep]}</p>
                 {currentStep === 0 && (
                   <>
                     <h2 className="font-serif text-4xl font-normal mb-2 text-[#1A1A1A]">About You</h2>
@@ -488,7 +488,7 @@ export default function AssessmentForm() {
                           placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
                           value={responses[field] || ""}
                           onChange={(e) => handleInput(field, e.target.value)}
-                          className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#A8765E] transition-colors font-light placeholder-[#888888] shadow-inner text-[#1A1A1A]"
+                          className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light placeholder-[#888888] shadow-inner text-[#1A1A1A]"
                         />
                       </div>
                     ))}
@@ -510,25 +510,25 @@ export default function AssessmentForm() {
                     />
                   </div>
                   <div className="pt-0">
-                    <input type="text" placeholder="Number of Family Members" value={responses.family_members || ""} onChange={(e) => handleInput("family_members", e.target.value)} className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#A8765E] transition-colors font-light placeholder-[#888888] shadow-inner text-[#1A1A1A]" />
+                    <input type="text" placeholder="Number of Family Members" value={responses.family_members || ""} onChange={(e) => handleInput("family_members", e.target.value)} className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light placeholder-[#888888] shadow-inner text-[#1A1A1A]" />
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
                     <div className="flex flex-col justify-start">
                       <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-3 font-medium h-8 flex items-end">Kids?</p>
                       <div className="flex gap-2">
-                        {["Yes", "No"].map(opt => <button key={opt} onClick={() => handleInput("kids", opt)} className={`flex-1 py-2 rounded-full text-xs border ${responses.kids === opt ? 'text-white' : ''}`} style={{ backgroundColor: responses.kids === opt ? '#A8765E' : 'transparent', borderColor: responses.kids === opt ? '#A8765E' : `#C5BCB1`, color: responses.kids === opt ? '#fff' : '#1A1A1A' }}>{opt}</button>)}
+                        {["Yes", "No"].map(opt => <button key={opt} onClick={() => handleInput("kids", opt)} className={`flex-1 py-2 rounded-full text-xs border ${responses.kids === opt ? 'text-white' : ''}`} style={{ backgroundColor: responses.kids === opt ? '#CB5A35' : 'transparent', borderColor: responses.kids === opt ? '#CB5A35' : `#E2DCD3`, color: responses.kids === opt ? '#fff' : '#1A1A1A' }}>{opt}</button>)}
                       </div>
                     </div>
                     <div className="flex flex-col justify-start">
                       <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-3 font-medium h-8 flex items-end leading-tight">Parents with you?</p>
                       <div className="flex gap-2">
-                        {["Yes", "No"].map(opt => <button key={opt} onClick={() => handleInput("parents", opt)} className={`flex-1 py-2 rounded-full text-xs border ${responses.parents === opt ? 'text-white' : ''}`} style={{ backgroundColor: responses.parents === opt ? '#A8765E' : 'transparent', borderColor: responses.parents === opt ? '#A8765E' : `#C5BCB1`, color: responses.parents === opt ? '#fff' : '#1A1A1A' }}>{opt}</button>)}
+                        {["Yes", "No"].map(opt => <button key={opt} onClick={() => handleInput("parents", opt)} className={`flex-1 py-2 rounded-full text-xs border ${responses.parents === opt ? 'text-white' : ''}`} style={{ backgroundColor: responses.parents === opt ? '#CB5A35' : 'transparent', borderColor: responses.parents === opt ? '#CB5A35' : `#E2DCD3`, color: responses.parents === opt ? '#fff' : '#1A1A1A' }}>{opt}</button>)}
                       </div>
                     </div>
                     <div className="flex flex-col justify-start">
                       <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-3 font-medium h-8 flex items-end">Pets?</p>
                       <div className="flex gap-2">
-                        {["Yes", "No"].map(opt => <button key={opt} onClick={() => handleInput("pets", opt)} className={`flex-1 py-2 rounded-full text-xs border ${responses.pets === opt ? 'text-white' : ''}`} style={{ backgroundColor: responses.pets === opt ? '#A8765E' : 'transparent', borderColor: responses.pets === opt ? '#A8765E' : `#C5BCB1`, color: responses.pets === opt ? '#fff' : '#1A1A1A' }}>{opt}</button>)}
+                        {["Yes", "No"].map(opt => <button key={opt} onClick={() => handleInput("pets", opt)} className={`flex-1 py-2 rounded-full text-xs border ${responses.pets === opt ? 'text-white' : ''}`} style={{ backgroundColor: responses.pets === opt ? '#CB5A35' : 'transparent', borderColor: responses.pets === opt ? '#CB5A35' : `#E2DCD3`, color: responses.pets === opt ? '#fff' : '#1A1A1A' }}>{opt}</button>)}
                       </div>
                     </div>
                   </div>
@@ -538,7 +538,7 @@ export default function AssessmentForm() {
               {currentStep === 1 && (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
                   {/* Card 1: Property Type */}
-                  <div className="bg-[#F4F1ED] text-[#1A1A1A] p-5 rounded-[24px] shadow-lg border border-white/50 flex flex-col justify-start">
+                  <div className="bg-[#F2EFE8] text-[#1A1A1A] p-5 rounded-[24px] shadow-lg border border-white/50 flex flex-col justify-start">
                     <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-4 font-medium text-center">Property Type</p>
                     <div className="grid grid-cols-2 gap-2">
                       {["Apartment", "Villa", "Bungalow", "Penthouse", "Office", "Commercial", "Retail", "Restaurant", "Clinic", "Factory", "Warehouse"].map(opt => (
@@ -546,8 +546,8 @@ export default function AssessmentForm() {
                           key={opt} onClick={() => handleInput("property_type", opt)}
                           className={`px-2 py-2 rounded-xl text-[10px] font-medium tracking-wide transition-all border ${responses.property_type === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                           style={{ 
-                            backgroundColor: responses.property_type === opt ? '#A8765E' : 'transparent',
-                            borderColor: responses.property_type === opt ? '#A8765E' : `#C5BCB1`,
+                            backgroundColor: responses.property_type === opt ? '#CB5A35' : 'transparent',
+                            borderColor: responses.property_type === opt ? '#CB5A35' : `#E2DCD3`,
                             color: responses.property_type === opt ? '#fff' : '#1A1A1A'
                           }}
                         >
@@ -560,12 +560,12 @@ export default function AssessmentForm() {
                       placeholder="Or specify other..."
                       value={responses.custom_property_type || ""}
                       onChange={(e) => handleInput("custom_property_type", e.target.value)}
-                      className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-xl px-4 py-2 text-[10px] focus:outline-none focus:border-[#A8765E] transition-colors font-light mt-auto pt-2 placeholder-[#888888] text-[#1A1A1A]"
+                      className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-xl px-4 py-2 text-[10px] focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-auto pt-2 placeholder-[#888888] text-[#1A1A1A]"
                     />
                   </div>
 
                   {/* Card 2: Property Status + Renovation Required */}
-                  <div className="bg-[#F4F1ED] text-[#1A1A1A] p-5 rounded-[24px] shadow-lg border border-white/50 flex flex-col justify-between">
+                  <div className="bg-[#F2EFE8] text-[#1A1A1A] p-5 rounded-[24px] shadow-lg border border-white/50 flex flex-col justify-between">
                     <div>
                       <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-4 font-medium text-center">Property Status</p>
                       <div className="grid grid-cols-1 gap-2">
@@ -574,8 +574,8 @@ export default function AssessmentForm() {
                             key={opt} onClick={() => handleInput("property_status", opt)}
                             className={`px-3 py-2 rounded-xl text-[10px] font-medium tracking-wide transition-all border ${responses.property_status === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                             style={{ 
-                              backgroundColor: responses.property_status === opt ? '#A8765E' : 'transparent',
-                              borderColor: responses.property_status === opt ? '#A8765E' : `#C5BCB1`,
+                              backgroundColor: responses.property_status === opt ? '#CB5A35' : 'transparent',
+                              borderColor: responses.property_status === opt ? '#CB5A35' : `#E2DCD3`,
                               color: responses.property_status === opt ? '#fff' : '#1A1A1A'
                             }}
                           >
@@ -588,18 +588,18 @@ export default function AssessmentForm() {
                         placeholder="Or specify other..."
                         value={responses.custom_property_status || ""}
                         onChange={(e) => handleInput("custom_property_status", e.target.value)}
-                        className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-xl px-4 py-2 text-[10px] focus:outline-none focus:border-[#A8765E] transition-colors font-light mt-3 placeholder-[#888888] text-[#1A1A1A]"
+                        className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-xl px-4 py-2 text-[10px] focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-3 placeholder-[#888888] text-[#1A1A1A]"
                       />
                     </div>
 
-                    <div className="mt-4 pt-4 border-t border-[#C5BCB1]/30 flex items-center justify-between">
+                    <div className="mt-4 pt-4 border-t border-[#E2DCD3]/30 flex items-center justify-between">
                       <div>
                         <p className="text-[10px] tracking-[0.1em] uppercase font-medium text-[#1A1A1A]">Is Renovation Required?</p>
                         <p className="text-[9px] opacity-60 mt-1 leading-tight">Check if structural changes needed.</p>
                       </div>
                       <button 
                         onClick={() => handleInput("is_renovation_required", responses.is_renovation_required === "Yes" ? "No" : "Yes")}
-                        className={`relative w-10 h-5 rounded-full transition-colors duration-300 flex-shrink-0 ml-2 ${responses.is_renovation_required === "Yes" ? "bg-[#A8765E]" : "bg-[#C5BCB1]"}`}
+                        className={`relative w-10 h-5 rounded-full transition-colors duration-300 flex-shrink-0 ml-2 ${responses.is_renovation_required === "Yes" ? "bg-[#CB5A35]" : "bg-[#E2DCD3]"}`}
                       >
                         <div className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform duration-300 ${responses.is_renovation_required === "Yes" ? "translate-x-5" : "translate-x-0"}`} />
                       </button>
@@ -607,7 +607,7 @@ export default function AssessmentForm() {
                   </div>
 
                   {/* Card 3: Renovation Type */}
-                  <div className="bg-[#F4F1ED] text-[#1A1A1A] p-5 rounded-[24px] shadow-lg border border-white/50 flex flex-col justify-start">
+                  <div className="bg-[#F2EFE8] text-[#1A1A1A] p-5 rounded-[24px] shadow-lg border border-white/50 flex flex-col justify-start">
                     <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-4 font-medium text-center">Renovation Type</p>
                     <div className="grid grid-cols-1 gap-2">
                       {["New Interior", "Renovation", "Partial Renovation", "Only Modular Kitchen", "Office Renovation", "Commercial Fit-out"].map(opt => (
@@ -615,8 +615,8 @@ export default function AssessmentForm() {
                           key={opt} onClick={() => handleInput("renovation_type", opt)}
                           className={`px-3 py-2 rounded-xl text-[10px] font-medium tracking-wide transition-all border ${responses.renovation_type === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                           style={{ 
-                            backgroundColor: responses.renovation_type === opt ? '#A8765E' : 'transparent',
-                            borderColor: responses.renovation_type === opt ? '#A8765E' : `#C5BCB1`,
+                            backgroundColor: responses.renovation_type === opt ? '#CB5A35' : 'transparent',
+                            borderColor: responses.renovation_type === opt ? '#CB5A35' : `#E2DCD3`,
                             color: responses.renovation_type === opt ? '#fff' : '#1A1A1A'
                           }}
                         >
@@ -629,7 +629,7 @@ export default function AssessmentForm() {
                   {/* Bottom Row - Centered */}
                   <div className="lg:col-span-3 flex flex-col md:flex-row justify-center gap-4 lg:gap-6 mt-1">
                     {/* Card 4: Budget */}
-                    <div className="bg-[#F4F1ED] text-[#1A1A1A] p-5 rounded-[24px] shadow-lg border border-white/50 w-full md:w-[350px]">
+                    <div className="bg-[#F2EFE8] text-[#1A1A1A] p-5 rounded-[24px] shadow-lg border border-white/50 w-full md:w-[350px]">
                       <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-4 font-medium text-center">Budget</p>
                       <div className="flex flex-wrap gap-2 justify-center">
                         {["5-10L", "10-20L", "20-35L", "35-50L", "50L+"].map(opt => (
@@ -637,8 +637,8 @@ export default function AssessmentForm() {
                             key={opt} onClick={() => handleInput("budget", opt)}
                             className={`px-4 py-2 rounded-xl text-[10px] font-medium tracking-wide transition-all border ${responses.budget === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                             style={{ 
-                              backgroundColor: responses.budget === opt ? '#A8765E' : 'transparent',
-                              borderColor: responses.budget === opt ? '#A8765E' : `#C5BCB1`,
+                              backgroundColor: responses.budget === opt ? '#CB5A35' : 'transparent',
+                              borderColor: responses.budget === opt ? '#CB5A35' : `#E2DCD3`,
                               color: responses.budget === opt ? '#fff' : '#1A1A1A'
                             }}
                           >
@@ -649,7 +649,7 @@ export default function AssessmentForm() {
                     </div>
 
                     {/* Card 5: Timeline */}
-                    <div className="bg-[#F4F1ED] text-[#1A1A1A] p-5 rounded-[24px] shadow-lg border border-white/50 w-full md:w-[350px]">
+                    <div className="bg-[#F2EFE8] text-[#1A1A1A] p-5 rounded-[24px] shadow-lg border border-white/50 w-full md:w-[350px]">
                       <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-4 font-medium text-center">Timeline</p>
                       <div className="flex flex-wrap gap-2 justify-center">
                         {["Immediately", "Within 3 months", "6 months", "1 year", "Just Exploring"].map(opt => (
@@ -657,8 +657,8 @@ export default function AssessmentForm() {
                             key={opt} onClick={() => handleInput("timeline", opt)}
                             className={`px-4 py-2 rounded-xl text-[10px] font-medium tracking-wide transition-all border ${responses.timeline === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                             style={{ 
-                              backgroundColor: responses.timeline === opt ? '#A8765E' : 'transparent',
-                              borderColor: responses.timeline === opt ? '#A8765E' : `#C5BCB1`,
+                              backgroundColor: responses.timeline === opt ? '#CB5A35' : 'transparent',
+                              borderColor: responses.timeline === opt ? '#CB5A35' : `#E2DCD3`,
                               color: responses.timeline === opt ? '#fff' : '#1A1A1A'
                             }}
                           >
@@ -683,8 +683,8 @@ export default function AssessmentForm() {
                             key={opt} onClick={() => handleMultiSelect("lifestyle", opt)}
                             className={`px-5 py-3 rounded-full text-xs tracking-wide transition-all border flex items-center gap-2 ${isSelected ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                             style={{ 
-                              backgroundColor: isSelected ? '#A8765E' : 'transparent',
-                              borderColor: isSelected ? '#A8765E' : `#C5BCB1`,
+                              backgroundColor: isSelected ? '#CB5A35' : 'transparent',
+                              borderColor: isSelected ? '#CB5A35' : `#E2DCD3`,
                               color: isSelected ? '#fff' : '#1A1A1A'
                             }}
                           >
@@ -699,7 +699,7 @@ export default function AssessmentForm() {
                       placeholder="Or describe a typical day..."
                       value={responses.custom_lifestyle || ""}
                       onChange={(e) => handleInput("custom_lifestyle", e.target.value)}
-                      className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#A8765E] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
+                      className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
                     />
                   </div>
 
@@ -713,8 +713,8 @@ export default function AssessmentForm() {
                             key={opt} onClick={() => handleMultiSelect("storage", opt)}
                             className={`px-5 py-3 rounded-full text-xs tracking-wide transition-all border flex items-center gap-2 ${isSelected ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                             style={{ 
-                              backgroundColor: isSelected ? '#A8765E' : 'transparent',
-                              borderColor: isSelected ? '#A8765E' : `#C5BCB1`,
+                              backgroundColor: isSelected ? '#CB5A35' : 'transparent',
+                              borderColor: isSelected ? '#CB5A35' : `#E2DCD3`,
                               color: isSelected ? '#fff' : '#1A1A1A'
                             }}
                           >
@@ -735,8 +735,8 @@ export default function AssessmentForm() {
                             key={opt} onClick={() => handleInput("smart_home", opt)}
                             className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border ${responses.smart_home === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                             style={{ 
-                              backgroundColor: responses.smart_home === opt ? '#A8765E' : 'transparent',
-                              borderColor: responses.smart_home === opt ? '#A8765E' : `#C5BCB1`,
+                              backgroundColor: responses.smart_home === opt ? '#CB5A35' : 'transparent',
+                              borderColor: responses.smart_home === opt ? '#CB5A35' : `#E2DCD3`,
                               color: responses.smart_home === opt ? '#fff' : '#1A1A1A'
                             }}
                           >
@@ -753,8 +753,8 @@ export default function AssessmentForm() {
                             key={opt} onClick={() => handleInput("sustainability", opt)}
                             className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border ${responses.sustainability === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                             style={{ 
-                              backgroundColor: responses.sustainability === opt ? '#A8765E' : 'transparent',
-                              borderColor: responses.sustainability === opt ? '#A8765E' : `#C5BCB1`,
+                              backgroundColor: responses.sustainability === opt ? '#CB5A35' : 'transparent',
+                              borderColor: responses.sustainability === opt ? '#CB5A35' : `#E2DCD3`,
                               color: responses.sustainability === opt ? '#fff' : '#1A1A1A'
                             }}
                           >
@@ -779,8 +779,8 @@ export default function AssessmentForm() {
                             key={opt} onClick={() => handleMultiSelect("personality", opt, 3)}
                             className={`py-5 px-4 rounded-[12px] text-xs tracking-widest uppercase transition-all border text-center ${isSelected ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                             style={{ 
-                              backgroundColor: isSelected ? '#A8765E' : 'transparent',
-                              borderColor: isSelected ? '#A8765E' : `#C5BCB1`,
+                              backgroundColor: isSelected ? '#CB5A35' : 'transparent',
+                              borderColor: isSelected ? '#CB5A35' : `#E2DCD3`,
                               color: isSelected ? '#fff' : '#1A1A1A'
                             }}
                           >
@@ -794,7 +794,7 @@ export default function AssessmentForm() {
                       placeholder="Or type your own trait..."
                       value={responses.custom_personality || ""}
                       onChange={(e) => handleInput("custom_personality", e.target.value)}
-                      className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#A8765E] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
+                      className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
                     />
                   </div>
                 </div>
@@ -810,8 +810,8 @@ export default function AssessmentForm() {
                           key={opt} onClick={() => handleInput("hotel", opt)}
                           className={`py-6 px-4 rounded-[12px] text-xs tracking-widest uppercase transition-all border text-center ${responses.hotel === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                           style={{ 
-                            backgroundColor: responses.hotel === opt ? '#A8765E' : 'transparent',
-                            borderColor: responses.hotel === opt ? '#A8765E' : `#C5BCB1`,
+                            backgroundColor: responses.hotel === opt ? '#CB5A35' : 'transparent',
+                            borderColor: responses.hotel === opt ? '#CB5A35' : `#E2DCD3`,
                             color: responses.hotel === opt ? '#fff' : '#1A1A1A'
                           }}
                         >
@@ -824,7 +824,7 @@ export default function AssessmentForm() {
                       placeholder="Or specify another hotel/vibe..."
                       value={responses.custom_hotel || ""}
                       onChange={(e) => handleInput("custom_hotel", e.target.value)}
-                      className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#A8765E] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
+                      className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
                     />
                   </div>
 
@@ -836,8 +836,8 @@ export default function AssessmentForm() {
                           key={opt} onClick={() => handleInput("vacation", opt)}
                           className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border ${responses.vacation === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                           style={{ 
-                            backgroundColor: responses.vacation === opt ? '#A8765E' : 'transparent',
-                            borderColor: responses.vacation === opt ? '#A8765E' : `#C5BCB1`,
+                            backgroundColor: responses.vacation === opt ? '#CB5A35' : 'transparent',
+                            borderColor: responses.vacation === opt ? '#CB5A35' : `#E2DCD3`,
                             color: responses.vacation === opt ? '#fff' : '#1A1A1A'
                           }}
                         >
@@ -850,7 +850,7 @@ export default function AssessmentForm() {
                       placeholder="Or enter your own dream destination..."
                       value={responses.custom_vacation || ""}
                       onChange={(e) => handleInput("custom_vacation", e.target.value)}
-                      className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#A8765E] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
+                      className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
                     />
                   </div>
                   
@@ -864,8 +864,8 @@ export default function AssessmentForm() {
                             key={opt} onClick={() => handleMultiSelect("aesthetic", opt)}
                             className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border flex items-center gap-2 ${isSelected ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                             style={{ 
-                              backgroundColor: isSelected ? '#A8765E' : 'transparent',
-                              borderColor: isSelected ? '#A8765E' : `#C5BCB1`,
+                              backgroundColor: isSelected ? '#CB5A35' : 'transparent',
+                              borderColor: isSelected ? '#CB5A35' : `#E2DCD3`,
                               color: isSelected ? '#fff' : '#1A1A1A'
                             }}
                           >
@@ -880,7 +880,7 @@ export default function AssessmentForm() {
                       placeholder="Or enter any specific style you love..."
                       value={responses.custom_aesthetic || ""}
                       onChange={(e) => handleInput("custom_aesthetic", e.target.value)}
-                      className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#A8765E] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
+                      className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
                     />
                   </div>
                 </div>
@@ -913,7 +913,7 @@ export default function AssessmentForm() {
                       placeholder="Or specify any other color preferences..."
                       value={responses.custom_color || ""}
                       onChange={(e) => handleInput("custom_color", e.target.value)}
-                      className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#A8765E] transition-colors font-light mt-6 placeholder-[#888888] text-[#1A1A1A]"
+                      className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-6 placeholder-[#888888] text-[#1A1A1A]"
                     />
                   </div>
 
@@ -927,8 +927,8 @@ export default function AssessmentForm() {
                             key={opt} onClick={() => handleMultiSelect("materials", opt)}
                             className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border flex items-center gap-2 ${isSelected ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                             style={{ 
-                              backgroundColor: isSelected ? '#A8765E' : 'transparent',
-                              borderColor: isSelected ? '#A8765E' : `#C5BCB1`,
+                              backgroundColor: isSelected ? '#CB5A35' : 'transparent',
+                              borderColor: isSelected ? '#CB5A35' : `#E2DCD3`,
                               color: isSelected ? '#fff' : '#1A1A1A'
                             }}
                           >
@@ -943,7 +943,7 @@ export default function AssessmentForm() {
                       placeholder="Or specify other materials..."
                       value={responses.custom_materials || ""}
                       onChange={(e) => handleInput("custom_materials", e.target.value)}
-                      className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#A8765E] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
+                      className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
                     />
                   </div>
 
@@ -955,8 +955,8 @@ export default function AssessmentForm() {
                           key={opt} onClick={() => handleInput("lighting", opt)}
                           className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border ${responses.lighting === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                           style={{ 
-                            backgroundColor: responses.lighting === opt ? '#A8765E' : 'transparent',
-                            borderColor: responses.lighting === opt ? '#A8765E' : `#C5BCB1`,
+                            backgroundColor: responses.lighting === opt ? '#CB5A35' : 'transparent',
+                            borderColor: responses.lighting === opt ? '#CB5A35' : `#E2DCD3`,
                             color: responses.lighting === opt ? '#fff' : '#1A1A1A'
                           }}
                         >
@@ -976,8 +976,8 @@ export default function AssessmentForm() {
                         key={opt} onClick={() => handleInput("vision", opt)}
                         className={`py-5 px-4 rounded-[12px] text-xs tracking-widest uppercase transition-all border text-center ${responses.vision === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
                         style={{ 
-                          backgroundColor: responses.vision === opt ? '#A8765E' : 'transparent',
-                          borderColor: responses.vision === opt ? '#A8765E' : `#C5BCB1`,
+                          backgroundColor: responses.vision === opt ? '#CB5A35' : 'transparent',
+                          borderColor: responses.vision === opt ? '#CB5A35' : `#E2DCD3`,
                           color: responses.vision === opt ? '#fff' : '#1A1A1A'
                         }}
                       >
@@ -990,7 +990,7 @@ export default function AssessmentForm() {
                     placeholder="Or enter your own word..."
                     value={responses.custom_vision || ""}
                     onChange={(e) => handleInput("custom_vision", e.target.value)}
-                    className="w-full bg-[#EAE6DF] border border-[#C5BCB1] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#A8765E] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
+                    className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
                   />
                 </div>
               )}
@@ -1014,7 +1014,7 @@ export default function AssessmentForm() {
             <button
               onClick={handleNext}
               className="group flex items-center py-4 px-8 rounded-full text-[10px] tracking-[0.25em] uppercase transition-all shadow-lg hover:shadow-xl hover:scale-105"
-              style={{ backgroundColor: "#A8765E", color: "#FFFFFF" }}
+              style={{ backgroundColor: "#CB5A35", color: "#FFFFFF" }}
             >
               {currentStep === 6 ? "Generate Report" : "Continue"}
               <ArrowRight size={14} className="ml-3 group-hover:translate-x-1 transition-transform" />
