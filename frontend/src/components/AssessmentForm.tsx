@@ -951,28 +951,25 @@ export default function AssessmentForm() {
 
             </motion.div>
           </AnimatePresence>
-          </div>
-        </div>
-
-        {/* Buttons - Fixed at bottom of the floating card container */}
-        <div 
-          className="absolute bottom-0 left-0 w-full p-8 md:p-12 z-20 pointer-events-none transition-all duration-1000 ease-in-out"
-        >
-          <div className="flex items-center justify-between max-w-md mx-auto w-full pointer-events-auto">
-            {currentStep > 0 ? (
-              <button onClick={handleBack} className="flex items-center text-[10px] tracking-[0.25em] uppercase opacity-80 hover:opacity-100 transition-opacity font-medium bg-white/80 backdrop-blur-md px-6 py-3 rounded-full shadow-md text-[#1A1A1A]">
-                <ChevronLeft size={14} className="mr-2" /> Back
+          
+            {/* Buttons - Flow naturally below the form */}
+            <div className="flex items-center justify-between max-w-2xl mx-auto w-full mt-8">
+              {currentStep > 0 ? (
+                <button onClick={handleBack} className="flex items-center text-[10px] tracking-[0.25em] uppercase opacity-60 hover:opacity-100 transition-opacity font-bold text-[#1A1A1A]">
+                  <ChevronLeft size={14} className="mr-2" /> Back
+                </button>
+              ) : <div></div>}
+              
+              <button
+                onClick={handleNext}
+                className="group flex items-center py-4 px-8 rounded-full text-[10px] tracking-[0.25em] uppercase transition-all shadow-lg hover:shadow-xl hover:scale-105"
+                style={{ backgroundColor: "#1A1A1A", color: "#FFFFFF" }}
+              >
+                {currentStep === 6 ? "Generate Report" : "Continue"}
+                <ArrowRight size={14} className="ml-3 group-hover:translate-x-1 transition-transform" />
               </button>
-            ) : <div></div>}
+            </div>
             
-            <button
-              onClick={handleNext}
-              className="group flex items-center py-4 px-8 rounded-full text-[10px] tracking-[0.25em] uppercase transition-all shadow-lg hover:shadow-xl hover:scale-105"
-              style={{ backgroundColor: "#CB5A35", color: "#FFFFFF" }}
-            >
-              {currentStep === 6 ? "Generate Report" : "Continue"}
-              <ArrowRight size={14} className="ml-3 group-hover:translate-x-1 transition-transform" />
-            </button>
           </div>
         </div>
       </div>
