@@ -417,18 +417,8 @@ export default function HomePage() {
           
           {/* Column 1: Logo & Description */}
           <div className="flex flex-col">
-            <div className="mb-6 flex flex-col">
-              <div className="flex items-center gap-2 text-[#CB5A35]">
-                {/* SVG Logo Approximation */}
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 2L2 18V38H14V24H26V38H38V18L20 2Z" stroke="#CB5A35" strokeWidth="2" strokeLinejoin="round"/>
-                  <path d="M14 14H26V20H14V14Z" stroke="#CB5A35" strokeWidth="2"/>
-                </svg>
-                <div className="flex flex-col">
-                  <span className="font-serif text-2xl font-light tracking-wide text-[#CB5A35]">Thinkhome</span>
-                  <span className="text-[8px] tracking-[0.2em] uppercase text-[#CB5A35]/80">- effortless interior sourcing -</span>
-                </div>
-              </div>
+            <div className="mb-6">
+              <img src="/logo.png" alt="Thinkhome Logo" className="h-16 w-auto object-contain" />
             </div>
             <p className="font-sans text-sm font-light leading-relaxed max-w-[280px]">
               A bridge built on trust, quality, and the vision to transform how interior sourcing works in India. Bridging the gap between vision and reality.
