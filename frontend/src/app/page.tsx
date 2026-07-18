@@ -123,7 +123,7 @@ export default function HomePage() {
       {/* NAVBAR */}
       <nav className="absolute top-0 w-full px-8 md:px-16 py-8 flex justify-between items-center z-50">
         <motion.div style={{ x: navX, y: navY }} className="flex items-center cursor-pointer group">
-          <img src="/logo.png" alt="Thinkhome" className="h-10 w-auto object-contain" />
+          <img src="/logo.png" alt="Thinkhome" className="h-14 md:h-16 w-auto object-contain" />
         </motion.div>
         <div />
       </nav>
@@ -185,34 +185,6 @@ export default function HomePage() {
         <div className="w-full lg:w-[48%] relative h-[55vh] lg:h-screen">
           <div className="absolute inset-0 bg-gradient-to-br from-[#EAE6DB] via-[#F2EFE8] to-[#E2D8CC]" />
           <HeroScene />
-
-          {/* Floating Glass Card — 3D tilt */}
-          <TiltCard depth={12} className="absolute bottom-12 left-8 lg:-left-16 max-w-[270px] z-10">
-            <div className="bg-white/75 backdrop-blur-2xl border border-white/90 p-6 rounded-[24px] shadow-2xl" style={{ transformStyle: "preserve-3d" }}>
-              <div style={{ transform: "translateZ(20px)" }}>
-                <p className="text-[9px] tracking-[0.2em] uppercase text-[#CB5A35] font-bold mb-1">AI Output · Live</p>
-                <p className="font-serif text-xl text-[#1A1A1A] mb-4">Warm Minimalist</p>
-                <div className="flex gap-2 flex-wrap">
-                  {["Oak", "Linen", "Brass", "Stone"].map(m => (
-                    <span key={m} className="px-3 py-1 bg-[#EAE6DB] rounded-full text-[9px] uppercase tracking-widest text-[#555]">{m}</span>
-                  ))}
-                </div>
-                <div className="mt-4 w-full bg-[#E2DCD3] h-1 rounded-full overflow-hidden">
-                  <motion.div initial={{ width: 0 }} animate={{ width: "92%" }} transition={{ delay: 2, duration: 2, ease: "easeOut" }} className="h-full bg-[#CB5A35] rounded-full" />
-                </div>
-                <p className="text-[9px] text-[#888] mt-1 tracking-widest uppercase">92% Lifestyle Match</p>
-              </div>
-            </div>
-          </TiltCard>
-
-          <TiltCard depth={10} className="absolute top-16 right-8 lg:right-12 z-10">
-            <div className="bg-white/75 backdrop-blur-2xl border border-white/90 p-4 rounded-[20px] shadow-xl" style={{ transformStyle: "preserve-3d" }}>
-              <div style={{ transform: "translateZ(15px)" }}>
-                <p className="text-[9px] tracking-widest uppercase text-[#888] font-bold mb-1">Identified Style</p>
-                <p className="font-serif text-lg text-[#1A1A1A]">Japandi Luxe</p>
-              </div>
-            </div>
-          </TiltCard>
         </div>
       </section>
 
