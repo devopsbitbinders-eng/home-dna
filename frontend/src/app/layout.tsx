@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   description: "High-end interior design assessment.",
 };
 
+export const viewport = {
+  colorScheme: 'light',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,7 +34,7 @@ export default function RootLayout({
         {children}
         
         {/* Floating Contact Buttons */}
-        <div className="fixed bottom-6 left-6 z-[100] flex flex-col gap-4">
+        <div className="fixed bottom-6 right-6 z-[100] flex flex-col gap-4">
           <a 
             href="https://wa.me/919076000109?text=Hi%20ThinkHome,%20I'd%20like%20to%20discuss%20a%20project."
             target="_blank"

@@ -398,7 +398,7 @@ export default function HomePage() {
             <div style={{ transform: "translateZ(35px)" }}>
               <MagneticButton
                 onClick={() => setStarted(true)}
-                className="mx-auto group bg-[#CB5A35] text-white px-12 py-5 rounded-full font-sans tracking-[0.2em] text-[10px] uppercase hover:bg-[#1A1A1A] transition-colors duration-500 shadow-xl flex items-center gap-4"
+                className="mx-auto group bg-[#CB5A35] text-white px-8 md:px-12 py-5 rounded-full font-sans tracking-[0.2em] text-[10px] uppercase hover:bg-[#1A1A1A] transition-colors duration-500 shadow-xl flex items-center justify-center gap-4 w-fit whitespace-nowrap"
               >
                 <span>Start Free Analysis</span>
                 <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
