@@ -412,65 +412,76 @@ export default function HomePage() {
         </TiltCard>
       </section>
 
-      <footer className="bg-[#111111] text-white pt-24 pb-12 px-8 md:px-16 lg:px-24">
-        <div className="max-w-7xl mx-auto">
-          {/* Top Section */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-white/10 pb-16 mb-16 gap-8">
-            <div className="max-w-xl">
-              <h2 className="font-serif text-5xl md:text-6xl font-light mb-6">
-                Let's <span className="italic text-[#CB5A35]">build</span> together.
-              </h2>
-              <p className="text-white/50 text-sm font-sans font-light max-w-sm mb-8 leading-relaxed">
-                Take the assessment today and discover the architectural identity that matches your exact lifestyle.
-              </p>
-              <div className="flex gap-4">
-                <MagneticButton
-                  onClick={() => setStarted(true)}
-                  className="bg-[#CB5A35] text-white px-8 py-4 rounded-full font-sans tracking-[0.2em] text-[9px] uppercase hover:bg-white hover:text-[#111111] transition-colors duration-500 shadow-xl"
-                >
-                  Start Analysis
-                </MagneticButton>
-                <button className="bg-transparent border border-white/20 text-white px-8 py-4 rounded-full font-sans tracking-[0.2em] text-[9px] uppercase hover:bg-white/10 transition-colors duration-500">
-                  Contact Us
-                </button>
+      <footer className="bg-[#0A0A0A] text-[#888888] pt-24 pb-12 px-8 md:px-16 lg:px-24 border-t border-[#222]">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+          
+          {/* Column 1: Logo & Description */}
+          <div className="flex flex-col">
+            <div className="mb-6 flex flex-col">
+              <div className="flex items-center gap-2 text-[#CB5A35]">
+                {/* SVG Logo Approximation */}
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M20 2L2 18V38H14V24H26V38H38V18L20 2Z" stroke="#CB5A35" strokeWidth="2" strokeLinejoin="round"/>
+                  <path d="M14 14H26V20H14V14Z" stroke="#CB5A35" strokeWidth="2"/>
+                </svg>
+                <div className="flex flex-col">
+                  <span className="font-serif text-2xl font-light tracking-wide text-[#CB5A35]">Thinkhome</span>
+                  <span className="text-[8px] tracking-[0.2em] uppercase text-[#CB5A35]/80">- effortless interior sourcing -</span>
+                </div>
               </div>
             </div>
+            <p className="font-sans text-sm font-light leading-relaxed max-w-[280px]">
+              A bridge built on trust, quality, and the vision to transform how interior sourcing works in India. Bridging the gap between vision and reality.
+            </p>
+          </div>
+
+          {/* Column 2: Quick Links */}
+          <div>
+            <h4 className="text-[10px] tracking-[0.2em] uppercase text-[#555] mb-8 font-semibold">Quick Links</h4>
+            <ul className="space-y-4 text-sm font-light text-[#D1D1D1]">
+              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Home</a></li>
+              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">About</a></li>
+              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Portfolio</a></li>
+              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Journal</a></li>
+              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Testimonials</a></li>
+              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Contact</a></li>
+              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Privacy & Policy</a></li>
+              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Terms & Condition</a></li>
+            </ul>
+          </div>
+
+          {/* Column 3: Services */}
+          <div>
+            <h4 className="text-[10px] tracking-[0.2em] uppercase text-[#555] mb-8 font-semibold">Services</h4>
+            <ul className="space-y-4 text-sm font-light text-[#D1D1D1]">
+              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Designer Matching</a></li>
+              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Curated Partnerships</a></li>
+              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Client Verification</a></li>
+              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Strategic Growth</a></li>
+            </ul>
+          </div>
+
+          {/* Column 4: Contact */}
+          <div>
+            <h4 className="text-[10px] tracking-[0.2em] uppercase text-[#555] mb-8 font-semibold">Contact</h4>
             
-            {/* Logo / Links section in a grid on the right side */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-12 w-full md:w-auto">
-              <div>
-                <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/40 mb-6 font-bold">General</h4>
-                <ul className="space-y-4 text-sm font-light text-white/70">
-                  <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Home</a></li>
-                  <li><a href="#" className="hover:text-[#CB5A35] transition-colors">About</a></li>
-                  <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Assessment</a></li>
-                  <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Contact</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-[10px] tracking-[0.2em] uppercase text-white/40 mb-6 font-bold">Company</h4>
-                <ul className="space-y-4 text-sm font-light text-white/70">
-                  <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Privacy Policy</a></li>
-                  <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Terms of Service</a></li>
-                  <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Careers</a></li>
-                </ul>
-              </div>
+            <div className="mb-8">
+              <h5 className="text-[9px] tracking-[0.15em] uppercase text-[#555] mb-3">Office</h5>
+              <p className="text-sm font-light text-[#D1D1D1] leading-relaxed max-w-[250px]">
+                Plaza Asiad, Swami Vivekanand Rd,<br/>
+                Willingdon,<br/>
+                Santacruz (West), Mumbai, Maharashtra<br/>
+                400054
+              </p>
+            </div>
+
+            <div>
+              <h5 className="text-[9px] tracking-[0.15em] uppercase text-[#555] mb-3">Enquiries</h5>
+              <p className="text-sm font-light text-[#D1D1D1] mb-1">+91 90760 00109</p>
+              <p className="text-sm font-light text-[#D1D1D1]">hey@thinkhome.in</p>
             </div>
           </div>
 
-          {/* Bottom Section */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 flex items-center justify-center border border-white/20 rounded-full">
-                <div className="w-2.5 h-2.5 bg-[#CB5A35] rounded-full" />
-              </div>
-              <span className="tracking-[0.4em] text-[10px] uppercase font-bold">Home DNA</span>
-            </div>
-            
-            <p className="text-white/40 text-[9px] tracking-[0.2em] uppercase font-sans">
-              © {new Date().getFullYear()} Home DNA Studio. All Rights Reserved.
-            </p>
-          </div>
         </div>
       </footer>
     </div>
