@@ -350,54 +350,11 @@ export default function AssessmentForm() {
   // --- ASSESSMENT QUESTIONS SCREEN ---
   return (
     <div 
-      className="flex h-screen font-sans overflow-hidden transition-all duration-1000 ease-in-out relative"
+      className="flex flex-col lg:flex-row h-screen font-sans overflow-hidden transition-all duration-1000 ease-in-out bg-[#F8F6F2]"
     >
-      {/* BACKGROUND IMAGE - Full screen */}
-      <div className="absolute inset-0 z-0 bg-[#1A1A1A]">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={currentStep}
-            src={IMAGES[currentStep]}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ 
-              opacity: 1, 
-              scale: [1.05, 1.15, 1.05],
-              x: ["0%", "-2%", "0%"],
-              y: ["0%", "1%", "0%"]
-            }}
-            exit={{ opacity: 0 }}
-            transition={{ 
-              opacity: { duration: 1.5, ease: "easeInOut" },
-              scale: { duration: 40, ease: "linear", repeat: Infinity },
-              x: { duration: 50, ease: "linear", repeat: Infinity },
-              y: { duration: 60, ease: "linear", repeat: Infinity }
-            }}
-            className="absolute inset-0 w-full h-full object-cover opacity-90 origin-center"
-            alt="Luxury Interior Inspiration"
-          />
-        </AnimatePresence>
-        {/* Subtle dark gradient overlay so the card pops */}
-        <div className="absolute inset-0 bg-black/10"></div>
-        {/* Dynamic Lighting Overlay based on user preference */}
-        <div 
-          className="absolute inset-0 pointer-events-none transition-colors duration-1000 ease-in-out"
-          style={{
-            backgroundColor: 
-              responses.lighting === "Warm" ? "rgba(255, 180, 100, 0.15)" :
-              responses.lighting === "White" ? "rgba(255, 255, 255, 0.1)" :
-              responses.lighting === "Natural" ? "rgba(200, 220, 255, 0.1)" :
-              responses.lighting === "Luxury" ? "rgba(181, 138, 75, 0.2)" :
-              responses.lighting === "Hotel Feel" ? "rgba(20, 20, 20, 0.4)" : "transparent",
-            mixBlendMode: 
-              responses.lighting === "Hotel Feel" ? "multiply" :
-              (responses.lighting === "Warm" || responses.lighting === "Luxury") ? "color" : "overlay"
-          }}
-        ></div>
-      </div>
-
       {/* LEFT SIDE - Content Card */}
-      <div className="w-full lg:w-[60%] flex flex-col h-full relative z-10 pt-10">
-        
+      <div className="w-full lg:w-1/2 flex flex-col h-full relative z-10 pt-10">
+
         {/* Progress - Fixed at top */}
         <div 
           className="absolute top-0 left-0 w-full p-8 md:p-12 z-20 pointer-events-none transition-all duration-1000 ease-in-out"
@@ -1018,6 +975,50 @@ export default function AssessmentForm() {
             </button>
           </div>
         </div>
+      </div>
+      </div>
+
+      {/* RIGHT SIDE - DYNAMIC IMAGE */}
+      <div className="w-full lg:w-1/2 relative z-0 bg-[#1A1A1A] hidden lg:block h-full">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentStep}
+            src={IMAGES[currentStep]}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ 
+              opacity: 1, 
+              scale: [1.05, 1.15, 1.05],
+              x: ["0%", "-2%", "0%"],
+              y: ["0%", "1%", "0%"]
+            }}
+            exit={{ opacity: 0 }}
+            transition={{ 
+              opacity: { duration: 1.5, ease: "easeInOut" },
+              scale: { duration: 40, ease: "linear", repeat: Infinity },
+              x: { duration: 50, ease: "linear", repeat: Infinity },
+              y: { duration: 60, ease: "linear", repeat: Infinity }
+            }}
+            className="absolute inset-0 w-full h-full object-cover opacity-90 origin-center"
+            alt="Luxury Interior Inspiration"
+          />
+        </AnimatePresence>
+        {/* Subtle dark gradient overlay */}
+        <div className="absolute inset-0 bg-black/10"></div>
+        {/* Dynamic Lighting Overlay based on user preference */}
+        <div 
+          className="absolute inset-0 pointer-events-none transition-colors duration-1000 ease-in-out"
+          style={{
+            backgroundColor: 
+              responses.lighting === "Warm" ? "rgba(255, 180, 100, 0.15)" :
+              responses.lighting === "White" ? "rgba(255, 255, 255, 0.1)" :
+              responses.lighting === "Natural" ? "rgba(200, 220, 255, 0.1)" :
+              responses.lighting === "Luxury" ? "rgba(181, 138, 75, 0.2)" :
+              responses.lighting === "Hotel Feel" ? "rgba(20, 20, 20, 0.4)" : "transparent",
+            mixBlendMode: 
+              responses.lighting === "Hotel Feel" ? "multiply" :
+              (responses.lighting === "Warm" || responses.lighting === "Luxury") ? "color" : "overlay"
+          }}
+        ></div>
       </div>
     </div>
   );
