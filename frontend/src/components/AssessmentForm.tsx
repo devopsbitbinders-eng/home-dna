@@ -357,15 +357,15 @@ export default function AssessmentForm() {
 
         {/* Progress - Fixed at top */}
         <div 
-          className="absolute top-0 left-0 w-full p-8 md:p-12 z-20 pointer-events-none transition-all duration-1000 ease-in-out"
+          className="w-full px-8 md:px-16 lg:px-24 pt-12 pb-4 z-20 transition-all duration-1000 ease-in-out bg-[#F8F6F2]"
         >
-          <div className="flex justify-between items-center text-[10px] tracking-[0.25em] uppercase mb-4 font-bold text-white drop-shadow-md">
+          <div className="flex justify-between items-center text-[10px] tracking-[0.2em] uppercase mb-4 text-[#888888]">
             <span>{Math.round(progress)}% Complete</span>
             <span>Est. {timeRemaining}s</span>
           </div>
-          <div className="w-full h-[3px] overflow-hidden bg-black/20 rounded-full">
+          <div className="w-full h-[1px] bg-[#E2DCD3] relative">
             <motion.div
-              className="h-full bg-[#CB5A35]"
+              className="absolute top-0 left-0 h-full bg-[#CB5A35]"
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.8, ease: "easeOut" }}
@@ -375,7 +375,7 @@ export default function AssessmentForm() {
 
         {/* Questions - Centered vertically without top clipping */}
         <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:hidden relative z-0">
-          <div className="min-h-full flex flex-col justify-center px-8 md:px-16 lg:px-24 pt-32 pb-48">
+          <div className="min-h-full flex flex-col justify-center px-8 md:px-16 lg:px-24 pt-8 pb-32">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
@@ -383,10 +383,10 @@ export default function AssessmentForm() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className={currentStep === 1 ? "max-w-6xl w-full mx-auto relative z-10" : "max-w-md w-full mx-auto bg-[#F2EFE8] text-[#1A1A1A] p-10 rounded-[32px] shadow-[10px_20px_50px_rgba(0,0,0,0.3)] border border-white/50 relative z-10"}
+                className="max-w-2xl w-full relative z-10"
               >
               
-              <div className={currentStep === 1 ? "bg-[#F2EFE8] text-[#1A1A1A] p-8 rounded-[32px] shadow-[10px_20px_50px_rgba(0,0,0,0.3)] border border-white/50 mb-8 max-w-md mx-auto text-center" : "mb-8"} >
+              <div className="mb-12">
                 <p className="text-[10px] tracking-[0.3em] uppercase mb-2 transition-colors duration-1000 text-[#CB5A35]">{SCREEN_TITLES[currentStep]}</p>
                 {currentStep === 0 && (
                   <>
