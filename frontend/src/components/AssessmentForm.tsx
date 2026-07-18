@@ -976,7 +976,6 @@ export default function AssessmentForm() {
           </div>
         </div>
       </div>
-      </div>
 
       {/* RIGHT SIDE - DYNAMIC IMAGE */}
       <div className="w-full lg:w-1/2 relative z-0 bg-[#1A1A1A] hidden lg:block h-full">
