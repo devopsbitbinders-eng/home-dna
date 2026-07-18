@@ -122,11 +122,8 @@ export default function HomePage() {
 
       {/* NAVBAR */}
       <nav className="absolute top-0 w-full px-8 md:px-16 py-8 flex justify-between items-center z-50">
-        <motion.div style={{ x: navX, y: navY }} className="flex items-center gap-3 cursor-pointer group">
-          <div className="w-8 h-8 flex items-center justify-center border border-[#1A1A1A]/20 rounded-full group-hover:border-[#CB5A35] transition-colors duration-300">
-            <div className="w-2.5 h-2.5 bg-[#1A1A1A] rounded-full group-hover:bg-[#CB5A35] transition-colors duration-300" />
-          </div>
-          <span className="tracking-[0.4em] text-[10px] uppercase font-bold text-[#1A1A1A]">Home DNA</span>
+        <motion.div style={{ x: navX, y: navY }} className="flex items-center cursor-pointer group">
+          <img src="/logo.png" alt="Thinkhome" className="h-10 w-auto object-contain" />
         </motion.div>
         <div />
       </nav>
