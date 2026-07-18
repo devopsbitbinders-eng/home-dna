@@ -132,11 +132,7 @@ export default function HomePage() {
       <section className="relative min-h-screen flex flex-col lg:flex-row overflow-hidden" style={{ perspective: "1200px" }}>
 
         {/* Left: Text — Mouse Parallax layers */}
-<<<<<<< HEAD
         <div className="w-full lg:w-[52%] flex flex-col justify-center px-8 md:px-16 lg:pl-24 lg:pr-8 z-20 pt-28 lg:pt-30 pb-16 lg:pb-16 relative">
-=======
-        <div className="w-full lg:w-[52%] flex flex-col justify-center px-8 md:px-16 lg:pl-24 lg:pr-8 z-20 pt-32 lg:pt-32 pb-16 lg:pb-16 relative">
->>>>>>> 024f3bc (Further reduce top padding to bring heading closer to logo)
 
           {/* 3D Heading — deepest parallax layer */}
           <motion.h1
