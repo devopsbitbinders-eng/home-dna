@@ -27,7 +27,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ colorScheme: 'light' }}>
+      <head>
+        <meta name="color-scheme" content="light only" />
+        <meta name="supported-color-schemes" content="light" />
+      </head>
       <body
         className={`${inter.variable} ${playfair.variable} antialiased bg-background text-foreground`}
       >
