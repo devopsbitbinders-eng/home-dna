@@ -133,7 +133,7 @@ export default function HomePage() {
 
         {/* Left: Text — Mouse Parallax layers */}
         <div className="w-full lg:w-[52%] flex flex-col justify-center px-8 md:px-16 lg:pl-24 lg:pr-8 z-20 pt-40 lg:pt-40 pb-16 lg:pb-16 relative">
-          
+
           {/* 3D Heading — deepest parallax layer */}
           <motion.h1
             initial={{ opacity: 0, y: 50, rotateX: -20 }} animate={{ opacity: 1, y: 0, rotateX: 0 }}
@@ -410,7 +410,7 @@ export default function HomePage() {
 
       <footer className="bg-[#0A0A0A] text-[#888888] pt-24 pb-12 px-8 md:px-16 lg:px-24 border-t border-[#222]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-          
+
           {/* Column 1: Logo & Description */}
           <div className="flex flex-col">
             <div className="mb-6">
@@ -425,14 +425,14 @@ export default function HomePage() {
           <div>
             <h4 className="text-[10px] tracking-[0.2em] uppercase text-[#555] mb-8 font-semibold">Quick Links</h4>
             <ul className="space-y-4 text-sm font-light text-[#D1D1D1]">
-              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Home</a></li>
-              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">About</a></li>
-              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Portfolio</a></li>
-              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Journal</a></li>
-              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Testimonials</a></li>
-              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Contact</a></li>
-              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Privacy & Policy</a></li>
-              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Terms & Condition</a></li>
+              <li><a href="https://thinkhomeinteriors.com/" className="hover:text-[#CB5A35] transition-colors">Home</a></li>
+              <li><a href="https://thinkhomeinteriors.com/about" className="hover:text-[#CB5A35] transition-colors">About</a></li>
+              <li><a href="https://thinkhomeinteriors.com/portfolio" className="hover:text-[#CB5A35] transition-colors">Portfolio</a></li>
+              <li><a href="https://thinkhomeinteriors.com/blog" className="hover:text-[#CB5A35] transition-colors">Journal</a></li>
+              <li><a href="https://thinkhomeinteriors.com/testimonials" className="hover:text-[#CB5A35] transition-colors">Testimonials</a></li>
+              <li><a href="https://thinkhomeinteriors.com/contact" className="hover:text-[#CB5A35] transition-colors">Contact</a></li>
+              <li><a href="https://thinkhomeinteriors.com/privacy" className="hover:text-[#CB5A35] transition-colors">Privacy & Policy</a></li>
+              <li><a href="https://thinkhomeinteriors.com/terms" className="hover:text-[#CB5A35] transition-colors">Terms & Condition</a></li>
             </ul>
           </div>
 
@@ -440,23 +440,23 @@ export default function HomePage() {
           <div>
             <h4 className="text-[10px] tracking-[0.2em] uppercase text-[#555] mb-8 font-semibold">Services</h4>
             <ul className="space-y-4 text-sm font-light text-[#D1D1D1]">
-              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Designer Matching</a></li>
-              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Curated Partnerships</a></li>
-              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Client Verification</a></li>
-              <li><a href="#" className="hover:text-[#CB5A35] transition-colors">Strategic Growth</a></li>
+              <li><a href="https://thinkhomeinteriors.com/services/designer-matching" className="hover:text-[#CB5A35] transition-colors">Designer Matching</a></li>
+              <li><a href="https://thinkhomeinteriors.com/services/curated-partnerships" className="hover:text-[#CB5A35] transition-colors">Curated Partnerships</a></li>
+              <li><a href="https://thinkhomeinteriors.com/services/client-verification" className="hover:text-[#CB5A35] transition-colors">Client Verification</a></li>
+              <li><a href="https://thinkhomeinteriors.com/services/strategic-growth" className="hover:text-[#CB5A35] transition-colors">Strategic Growth</a></li>
             </ul>
           </div>
 
           {/* Column 4: Contact */}
           <div>
             <h4 className="text-[10px] tracking-[0.2em] uppercase text-[#555] mb-8 font-semibold">Contact</h4>
-            
+
             <div className="mb-8">
               <h5 className="text-[9px] tracking-[0.15em] uppercase text-[#555] mb-3">Office</h5>
               <p className="text-sm font-light text-[#D1D1D1] leading-relaxed max-w-[250px]">
-                Plaza Asiad, Swami Vivekanand Rd,<br/>
-                Willingdon,<br/>
-                Santacruz (West), Mumbai, Maharashtra<br/>
+                Plaza Asiad, Swami Vivekanand Rd,<br />
+                Willingdon,<br />
+                Santacruz (West), Mumbai, Maharashtra<br />
                 400054
               </p>
             </div>
