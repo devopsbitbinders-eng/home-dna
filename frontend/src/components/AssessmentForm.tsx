@@ -31,23 +31,20 @@ const CustomDropdown = ({ label, options, value, onChange, theme }: any) => {
       <button 
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full bg-transparent border-b py-3 text-sm text-left flex justify-between items-center transition-colors font-light"
-        style={{ borderBottomColor: `color-mix(in srgb, ${theme.text} 20%, transparent)`, color: value ? 'inherit' : `color-mix(in srgb, ${theme.text} 60%, transparent)` }}
+        className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm text-left flex justify-between items-center transition-colors font-light shadow-inner"
+        style={{ color: value ? '#1A1A1A' : '#888888' }}
       >
         {value || label}
-        <ChevronDown size={14} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} style={{ opacity: 0.6 }} />
+        <ChevronDown size={14} className={`transition-transform text-[#1A1A1A] ${isOpen ? 'rotate-180' : ''}`} style={{ opacity: 0.6 }} />
       </button>
       {isOpen && (
-        <div className="absolute top-full left-0 w-full mt-2 rounded-[12px] shadow-2xl overflow-hidden z-[100]" style={{ backgroundColor: theme.bg, border: `1px solid color-mix(in srgb, ${theme.text} 10%, transparent)` }}>
+        <div className="absolute top-full left-0 w-full mt-2 rounded-[24px] shadow-2xl overflow-hidden z-[100] bg-white border border-[#E2DCD3]">
           {options.map((opt: string) => (
             <button
               key={opt}
               type="button"
               onClick={() => { onChange(opt); setIsOpen(false); }}
-              className="w-full text-left px-5 py-4 text-sm transition-colors font-light"
-              style={{ color: theme.text }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = `color-mix(in srgb, ${theme.text} 5%, transparent)`}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+              className="w-full text-left px-5 py-3 text-sm transition-colors font-light hover:bg-[#F2EFE8] text-[#1A1A1A]"
             >
               {opt}
             </button>
