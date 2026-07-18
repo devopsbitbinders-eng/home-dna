@@ -132,53 +132,91 @@ export default function HomePage() {
       <section className="relative min-h-screen flex flex-col lg:flex-row overflow-hidden" style={{ perspective: "1200px" }}>
 
         {/* Left: Text — Mouse Parallax layers */}
-        <div className="w-full lg:w-[52%] flex flex-col justify-center px-8 md:px-16 lg:pl-24 lg:pr-8 z-20 pt-48 lg:pt-48 pb-16 lg:pb-16">
-
-
-          {/* 3D Heading — deepest parallax layer */}
-          <motion.h1
-            initial={{ opacity: 0, y: 50, rotateX: -20 }} animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            style={{ x: h1X, y: h1Y, transformStyle: "preserve-3d", perspective: 600 }}
-            className="font-serif text-6xl md:text-7xl lg:text-[88px] font-light leading-[1.05] mb-8 text-[#1A1A1A] tracking-tight"
-          >
-            Curate Your <br />
-            <span className="italic text-[#CB5A35]" style={{ display: "inline-block", textShadow: "4px 4px 0px rgba(203,90,53,0.12), 8px 8px 0px rgba(203,90,53,0.06)" }}>Sanctuary.</span>
-          </motion.h1>
-
-          {/* Subtext */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }}
-            style={{ x: subX, y: subY }}
-            className="font-sans text-[#555555] text-lg md:text-xl font-light leading-relaxed mb-12 max-w-lg"
-          >
-            Move beyond generic moodboards. Unlock the interior language that is inherently, uniquely yours — powered by AI.
-          </motion.p>
-
-          {/* CTA */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.5 }} className="flex flex-wrap items-center gap-6">
-            <MagneticButton onClick={() => setStarted(true)} className="group relative overflow-hidden bg-[#1A1A1A] text-white px-10 py-5 rounded-full font-sans tracking-[0.2em] text-[10px] uppercase hover:bg-[#CB5A35] transition-colors duration-500 shadow-xl flex items-center gap-4">
-              <span>Begin Analysis</span>
-              <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
-            </MagneticButton>
-            <div className="flex items-center gap-3 text-[10px] tracking-widest text-[#888] uppercase font-semibold">
-              <Sparkles size={14} className="text-[#CB5A35]" /> 3-Minute Assessment
-            </div>
+        <div className="w-full lg:w-[52%] flex flex-col justify-center px-8 md:px-16 lg:pl-24 lg:pr-12 z-20 pt-48 lg:pt-48 pb-16 lg:pb-16 relative">
+          
+          {/* Small HOME DNA label */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="flex items-center gap-3 mb-6">
+            <span className="w-8 h-[1px] bg-[#B68A5A]" />
+            <span className="text-[10px] tracking-[0.3em] uppercase font-semibold text-[#B68A5A]">Home DNA</span>
           </motion.div>
 
-          {/* Stats — shallowest parallax */}
+          {/* 3D Heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{ x: h1X, y: h1Y }}
+            className="font-serif text-5xl md:text-6xl lg:text-[76px] font-light leading-[1.1] mb-8 text-[#1A1A1A] tracking-tight"
+          >
+            Discover Your <br />
+            <span className="italic text-[#B68A5A]">Home DNA.</span>
+          </motion.h1>
+
+          {/* Premium Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3 }}
+            style={{ x: subX, y: subY }}
+            className="font-sans text-[#555555] text-lg lg:text-xl font-light leading-relaxed mb-10 max-w-[480px]"
+          >
+            Unlock the architectural language that is inherently yours. A curated methodology mapping your personal aesthetic to spatial reality.
+          </motion.p>
+
+          {/* Elegant Feature Pills */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }} className="flex flex-wrap gap-3 mb-12">
+            {["Lifestyle", "Personality", "Budget", "Family"].map(pill => (
+              <span key={pill} className="px-4 py-1.5 border border-[#E2DCD3] rounded-full text-[10px] uppercase tracking-widest text-[#666] bg-white/50 backdrop-blur-sm">
+                {pill}
+              </span>
+            ))}
+          </motion.div>
+
+          {/* CTA & Trust Indicators */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.5 }} className="flex flex-col gap-5">
+            <MagneticButton onClick={() => setStarted(true)} className="group relative w-fit overflow-hidden bg-[#111111] text-white px-12 py-5 rounded-full font-sans tracking-[0.2em] text-[10px] uppercase hover:bg-[#B68A5A] transition-colors duration-500 shadow-2xl flex items-center gap-4">
+              <span>Start Assessment</span>
+              <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
+            </MagneticButton>
+            <p className="text-[9px] tracking-widest text-[#888] uppercase font-semibold">
+              3-Minute Assessment <span className="mx-2 text-[#E2DCD3]">|</span> Free Report <span className="mx-2 text-[#E2DCD3]">|</span> AI Powered
+            </p>
+          </motion.div>
+
+          {/* Refined Statistics */}
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2, duration: 1 }}
             style={{ x: statsX, y: statsY }}
-            className="flex gap-10 mt-16 pt-10 border-t border-[#E2DCD3]"
+            className="flex items-center gap-12 mt-20 pt-8 border-t border-[#E2DCD3] max-w-[480px]"
           >
-            {[["500+", "Projects"], ["98%", "Match Rate"], ["3 min", "Assessment"]].map(([val, label]) => (
-              <div key={label} className="group cursor-default">
-                <p className="font-serif text-3xl text-[#1A1A1A] font-light group-hover:text-[#CB5A35] transition-colors">{val}</p>
-                <p className="text-[9px] tracking-[0.2em] uppercase text-[#888] mt-1 font-semibold">{label}</p>
+            {[["500+", "Homes Curated"], ["98%", "Style Accuracy"]].map(([val, label]) => (
+              <div key={label} className="group cursor-default flex flex-col">
+                <p className="font-serif text-3xl text-[#1A1A1A] font-light group-hover:text-[#B68A5A] transition-colors">{val}</p>
+                <p className="text-[9px] tracking-[0.2em] uppercase text-[#888] mt-2 font-semibold">{label}</p>
               </div>
             ))}
           </motion.div>
+
+          {/* Floating Glass Card (Overlapping right) */}
+          <TiltCard depth={10} className="hidden lg:block absolute right-[-60px] top-[60%] -translate-y-1/2 z-30">
+            <div className="bg-white/60 backdrop-blur-xl border border-white/80 p-6 rounded-[24px] shadow-2xl w-[260px]" style={{ transformStyle: "preserve-3d" }}>
+              <div style={{ transform: "translateZ(20px)" }}>
+                <p className="text-[9px] tracking-[0.2em] uppercase text-[#B68A5A] font-bold mb-2">Live Analysis</p>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-[#111111] flex items-center justify-center">
+                    <Hexagon size={16} className="text-[#B68A5A]" />
+                  </div>
+                  <div>
+                    <p className="font-serif text-lg text-[#1A1A1A] leading-tight">Japandi Luxe</p>
+                    <p className="text-[9px] tracking-widest uppercase text-[#888] mt-1">Primary Style</p>
+                  </div>
+                </div>
+                <div className="h-px w-full bg-gradient-to-r from-transparent via-[#E2DCD3] to-transparent mb-4" />
+                <div className="flex justify-between items-center text-[10px] uppercase tracking-widest text-[#555]">
+                  <span>Precision</span>
+                  <span className="font-bold text-[#1A1A1A]">99%</span>
+                </div>
+              </div>
+            </div>
+          </TiltCard>
+
         </div>
 
         {/* Right: 3D Scene */}
