@@ -796,7 +796,6 @@ export default function AssessmentForm() {
                       className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-6 placeholder-[#888888] text-[#1A1A1A]"
                     />
                   </div>
-                  </div>
 
                   <div>
                     <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-5 font-medium">Lighting</p>
