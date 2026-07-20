@@ -170,8 +170,7 @@ export default function AssessmentForm() {
       // Dynamically import to avoid SSR issues
       const html2pdf = (await import("html2pdf.js")).default;
       const element = document.getElementById("report-container");
-      
-      const opt = {
+      const opt: any = {
         margin: 0,
         filename: 'Home_DNA_Report.pdf',
         image: { type: 'jpeg', quality: 0.98 },
