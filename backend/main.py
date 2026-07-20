@@ -101,4 +101,34 @@ def book_consultation(consultation: schemas.ConsultationSubmit, db: Session = De
     db.add(db_consultation)
     db.commit()
     db.refresh(db_consultation)
+    
+    # Also forward the booking to Google Sheets!
+    import os
+    import requests
+    import threading
+    
+    sheet_webhook_url = os.getenv("GOOGLE_SHEET_WEBHOOK_URL")
+    if sheet_webhook_url:
+        def send_consultation():
+            try:
+                # Fetch lead details from either table
+                lead = db.query(models.Lead).filter(models.Lead.id == consultation.lead_id).first()
+                if not lead:
+                    lead = db.query(models.ExploringLead).filter(models.ExploringLead.id == consultation.lead_id).first()
+                
+                if lead:
+                    sheet_data = {
+                        "is_consultation": True,
+                        "name": lead.name,
+                        "phone": lead.phone,
+                        "email": lead.email,
+                        "preferred_date": consultation.preferred_date,
+                        "preferred_time": consultation.preferred_time
+                    }
+                    requests.post(sheet_webhook_url, json=sheet_data, timeout=5)
+            except Exception as e:
+                print(f"Failed to save consultation to Sheets: {e}")
+                
+        threading.Thread(target=send_consultation).start()
+
     return db_consultation
