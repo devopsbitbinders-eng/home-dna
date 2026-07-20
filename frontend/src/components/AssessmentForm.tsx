@@ -239,9 +239,9 @@ export default function AssessmentForm() {
     );
 
     const StatCard = ({ title, value }: { title: string, value: string }) => (
-      <div className="bg-white p-8 rounded-[24px] border border-[#E8E3DA] shadow-sm hover:-translate-y-1 transition-transform duration-500 text-center">
-        <h4 className="font-sans text-xs tracking-[0.2em] uppercase text-[#666666] mb-4">{title}</h4>
-        <p className="font-serif text-2xl md:text-3xl text-[#B58A4B]">{value}</p>
+      <div className="bg-white p-6 md:p-8 rounded-[24px] border border-[#E8E3DA] shadow-sm hover:-translate-y-1 transition-transform duration-500 text-center flex flex-col justify-center h-full">
+        <h4 className="font-sans text-[10px] md:text-xs tracking-[0.2em] uppercase text-[#666666] mb-3 md:mb-4">{title}</h4>
+        <p className="font-serif text-lg md:text-xl lg:text-2xl text-[#B58A4B] break-words leading-snug md:leading-tight">{value}</p>
       </div>
     );
 
