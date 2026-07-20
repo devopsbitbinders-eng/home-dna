@@ -581,47 +581,49 @@ export default function AssessmentForm() {
                   </div>
 
                   {/* Bottom Row - Centered */}
-                  <div className="lg:col-span-3 flex flex-col md:flex-row justify-center gap-4 lg:gap-6 mt-1">
-                    {/* Card 4: Budget */}
-                    <div className="bg-[#F2EFE8] text-[#1A1A1A] p-5 rounded-[24px] shadow-lg border border-white/50 w-full md:w-[350px]">
-                      <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-4 font-medium text-center">Budget</p>
-                      <div className="flex flex-wrap gap-2 justify-center">
-                        {["5-10L", "10-20L", "20-35L", "35-50L", "50L+"].map(opt => (
-                          <button
-                            key={opt} onClick={() => handleInput("budget", opt)}
-                            className={`px-4 py-2 rounded-xl text-[10px] font-medium tracking-wide transition-all border ${responses.budget === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
-                            style={{ 
-                              backgroundColor: responses.budget === opt ? '#CB5A35' : 'transparent',
-                              borderColor: responses.budget === opt ? '#CB5A35' : `#E2DCD3`,
-                              color: responses.budget === opt ? '#fff' : '#1A1A1A'
-                            }}
-                          >
-                            {opt}
-                          </button>
-                        ))}
+                  {responses.is_renovation_required === "Yes" && (
+                    <div className="lg:col-span-3 flex flex-col md:flex-row justify-center gap-4 lg:gap-6 mt-1">
+                      {/* Card 4: Budget */}
+                      <div className="bg-[#F2EFE8] text-[#1A1A1A] p-5 rounded-[24px] shadow-lg border border-white/50 w-full md:w-[350px]">
+                        <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-4 font-medium text-center">Budget</p>
+                        <div className="flex flex-wrap gap-2 justify-center">
+                          {["5-10L", "10-20L", "20-35L", "35-50L", "50L+"].map(opt => (
+                            <button
+                              key={opt} onClick={() => handleInput("budget", opt)}
+                              className={`px-4 py-2 rounded-xl text-[10px] font-medium tracking-wide transition-all border ${responses.budget === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
+                              style={{ 
+                                backgroundColor: responses.budget === opt ? '#CB5A35' : 'transparent',
+                                borderColor: responses.budget === opt ? '#CB5A35' : `#E2DCD3`,
+                                color: responses.budget === opt ? '#fff' : '#1A1A1A'
+                              }}
+                            >
+                              {opt}
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Card 5: Timeline */}
-                    <div className="bg-[#F2EFE8] text-[#1A1A1A] p-5 rounded-[24px] shadow-lg border border-white/50 w-full md:w-[350px]">
-                      <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-4 font-medium text-center">Timeline</p>
-                      <div className="flex flex-wrap gap-2 justify-center">
-                        {["Immediately", "Within 3 months", "6 months", "1 year", "Just Exploring"].map(opt => (
-                          <button
-                            key={opt} onClick={() => handleInput("timeline", opt)}
-                            className={`px-4 py-2 rounded-xl text-[10px] font-medium tracking-wide transition-all border ${responses.timeline === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
-                            style={{ 
-                              backgroundColor: responses.timeline === opt ? '#CB5A35' : 'transparent',
-                              borderColor: responses.timeline === opt ? '#CB5A35' : `#E2DCD3`,
-                              color: responses.timeline === opt ? '#fff' : '#1A1A1A'
-                            }}
-                          >
-                            {opt}
-                          </button>
-                        ))}
+                      {/* Card 5: Timeline */}
+                      <div className="bg-[#F2EFE8] text-[#1A1A1A] p-5 rounded-[24px] shadow-lg border border-white/50 w-full md:w-[350px]">
+                        <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-4 font-medium text-center">Timeline</p>
+                        <div className="flex flex-wrap gap-2 justify-center">
+                          {["Immediately", "Within 3 months", "6 months", "1 year", "Just Exploring"].map(opt => (
+                            <button
+                              key={opt} onClick={() => handleInput("timeline", opt)}
+                              className={`px-4 py-2 rounded-xl text-[10px] font-medium tracking-wide transition-all border ${responses.timeline === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
+                              style={{ 
+                                backgroundColor: responses.timeline === opt ? '#CB5A35' : 'transparent',
+                                borderColor: responses.timeline === opt ? '#CB5A35' : `#E2DCD3`,
+                                color: responses.timeline === opt ? '#fff' : '#1A1A1A'
+                              }}
+                            >
+                              {opt}
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               )}
 
