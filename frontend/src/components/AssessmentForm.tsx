@@ -680,7 +680,7 @@ export default function AssessmentForm() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="grid grid-cols-1 gap-8">
                     <div>
                       <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-5 font-medium">Smart Home</p>
                       <div className="flex flex-wrap gap-3">
@@ -692,24 +692,6 @@ export default function AssessmentForm() {
                               backgroundColor: responses.smart_home === opt ? '#CB5A35' : 'transparent',
                               borderColor: responses.smart_home === opt ? '#CB5A35' : `#E2DCD3`,
                               color: responses.smart_home === opt ? '#fff' : '#1A1A1A'
-                            }}
-                          >
-                            {opt}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-5 font-medium">Sustainability</p>
-                      <div className="flex flex-wrap gap-3">
-                        {["Very Important", "Important", "Not Important"].map(opt => (
-                          <button
-                            key={opt} onClick={() => handleInput("sustainability", opt)}
-                            className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border ${responses.sustainability === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
-                            style={{ 
-                              backgroundColor: responses.sustainability === opt ? '#CB5A35' : 'transparent',
-                              borderColor: responses.sustainability === opt ? '#CB5A35' : `#E2DCD3`,
-                              color: responses.sustainability === opt ? '#fff' : '#1A1A1A'
                             }}
                           >
                             {opt}
@@ -781,62 +763,6 @@ export default function AssessmentForm() {
                       className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
                     />
                   </div>
-
-                  <div>
-                    <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-5 font-medium">Dream Vacation</p>
-                    <div className="flex flex-wrap gap-3">
-                      {["Swiss", "Japan", "Bali", "Rajasthan", "Dubai", "Maldives", "Europe", "Himalayas"].map(opt => (
-                        <button
-                          key={opt} onClick={() => handleInput("vacation", opt)}
-                          className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border ${responses.vacation === opt ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
-                          style={{ 
-                            backgroundColor: responses.vacation === opt ? '#CB5A35' : 'transparent',
-                            borderColor: responses.vacation === opt ? '#CB5A35' : `#E2DCD3`,
-                            color: responses.vacation === opt ? '#fff' : '#1A1A1A'
-                          }}
-                        >
-                          {opt}
-                        </button>
-                      ))}
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Or enter your own dream destination..."
-                      value={responses.custom_vacation || ""}
-                      onChange={(e) => handleInput("custom_vacation", e.target.value)}
-                      className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
-                    />
-                  </div>
-                  
-                  <div>
-                    <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-5 font-medium">Aesthetic Styles</p>
-                    <div className="flex flex-wrap gap-3">
-                      {["Modern Minimalist", "Scandinavian", "Mid-Century Modern", "Industrial", "Bohemian", "Classic Traditional", "Japandi", "Art Deco"].map(opt => {
-                        const isSelected = (responses.aesthetic || []).includes(opt);
-                        return (
-                          <button
-                            key={opt} onClick={() => handleMultiSelect("aesthetic", opt)}
-                            className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border flex items-center gap-2 ${isSelected ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
-                            style={{ 
-                              backgroundColor: isSelected ? '#CB5A35' : 'transparent',
-                              borderColor: isSelected ? '#CB5A35' : `#E2DCD3`,
-                              color: isSelected ? '#fff' : '#1A1A1A'
-                            }}
-                          >
-                            {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
-                            {opt}
-                          </button>
-                        );
-                      })}
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Or enter any specific style you love..."
-                      value={responses.custom_aesthetic || ""}
-                      onChange={(e) => handleInput("custom_aesthetic", e.target.value)}
-                      className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
-                    />
-                  </div>
                 </div>
               )}
 
@@ -870,35 +796,6 @@ export default function AssessmentForm() {
                       className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-6 placeholder-[#888888] text-[#1A1A1A]"
                     />
                   </div>
-
-                  <div>
-                    <p className="text-[10px] tracking-[0.2em] uppercase opacity-60 mb-5 font-medium">Material Preference</p>
-                    <div className="flex flex-wrap gap-3">
-                      {["Wood", "Marble", "Metal", "Glass", "Concrete", "Rattan"].map(opt => {
-                        const isSelected = (responses.materials || []).includes(opt);
-                        return (
-                          <button
-                            key={opt} onClick={() => handleMultiSelect("materials", opt)}
-                            className={`px-6 py-3 rounded-full text-xs tracking-wide transition-all border flex items-center gap-2 ${isSelected ? 'text-white shadow-md' : 'bg-transparent hover:opacity-100'}`}
-                            style={{ 
-                              backgroundColor: isSelected ? '#CB5A35' : 'transparent',
-                              borderColor: isSelected ? '#CB5A35' : `#E2DCD3`,
-                              color: isSelected ? '#fff' : '#1A1A1A'
-                            }}
-                          >
-                            {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white"></div>}
-                            {opt}
-                          </button>
-                        );
-                      })}
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Or specify other materials..."
-                      value={responses.custom_materials || ""}
-                      onChange={(e) => handleInput("custom_materials", e.target.value)}
-                      className="w-full bg-[#FFFFFF] border border-[#E2DCD3] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-[#CB5A35] transition-colors font-light mt-4 placeholder-[#888888] text-[#1A1A1A]"
-                    />
                   </div>
 
                   <div>
