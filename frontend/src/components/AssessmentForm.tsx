@@ -172,7 +172,7 @@ export default function AssessmentForm() {
       const element = document.getElementById("report-container");
       
       const opt = {
-        margin: [0, 0, 0, 0],
+        margin: 0,
         filename: 'Home_DNA_Report.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true },
