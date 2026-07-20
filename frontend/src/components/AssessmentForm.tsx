@@ -284,7 +284,7 @@ export default function AssessmentForm() {
           </Section>
 
           {/* CTA / Booking Section */}
-          <Section className="text-center pt-24">
+          <Section className="text-center pt-24 print:hidden">
             <h2 className="font-serif text-4xl mb-6">Ready To Transform Your Home DNA Into Reality?</h2>
             
             {bookingSuccess ? (
@@ -318,7 +318,7 @@ export default function AssessmentForm() {
                 <button onClick={() => setIsBooking(true)} className="bg-[#1A1A1A] text-white px-10 py-5 rounded-full font-sans tracking-widest text-xs uppercase hover:bg-[#333333] transition-colors w-full sm:w-auto shadow-xl">
                   Book FREE Design Consultation
                 </button>
-                <button className="bg-white border border-[#E8E3DA] text-[#1A1A1A] px-10 py-5 rounded-full font-sans tracking-widest text-xs uppercase hover:bg-[#F8F6F2] transition-colors w-full sm:w-auto">
+                <button onClick={() => window.print()} className="bg-white border border-[#E8E3DA] text-[#1A1A1A] px-10 py-5 rounded-full font-sans tracking-widest text-xs uppercase hover:bg-[#F8F6F2] transition-colors w-full sm:w-auto">
                   Download Report
                 </button>
               </div>
