@@ -56,6 +56,33 @@ def submit_assessment(assessment: schemas.AssessmentSubmit, db: Session = Depend
     db.commit()
     db.refresh(db_lead)
     
+    # 4. Save to Google Sheets via Webhook (if configured)
+    import os
+    import requests
+    import threading
+    
+    sheet_webhook_url = os.getenv("GOOGLE_SHEET_WEBHOOK_URL")
+    if sheet_webhook_url:
+        def send_to_sheet():
+            try:
+                sheet_data = {
+                    "name": assessment.name,
+                    "phone": assessment.phone,
+                    "email": assessment.email,
+                    "score": score,
+                    "is_hot_lead": is_hot_lead if timeline != "Just Exploring" else False,
+                    "budget": assessment.responses.get("budget", ""),
+                    "timeline": timeline,
+                    "property_type": assessment.responses.get("property_type", ""),
+                    "city": assessment.responses.get("city", "")
+                }
+                requests.post(sheet_webhook_url, json=sheet_data, timeout=5)
+            except Exception as e:
+                print(f"Failed to save to Google Sheets: {e}")
+        
+        # Run in background so it doesn't slow down the user's report generation
+        threading.Thread(target=send_to_sheet).start()
+    
     # We return the lead object, FastAPI will serialize it to LeadResponse
     return db_lead
 
