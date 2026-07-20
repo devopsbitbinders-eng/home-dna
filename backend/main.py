@@ -71,6 +71,7 @@ def submit_assessment(assessment: schemas.AssessmentSubmit, db: Session = Depend
                     "email": assessment.email,
                     "score": score,
                     "is_hot_lead": is_hot_lead if timeline != "Just Exploring" else False,
+                    "is_renovation_required": assessment.responses.get("is_renovation_required", "No"),
                     "budget": assessment.responses.get("budget", ""),
                     "timeline": timeline,
                     "property_type": assessment.responses.get("property_type", ""),
