@@ -165,6 +165,27 @@ export default function AssessmentForm() {
     }
   };
 
+  const handleDownloadPDF = async () => {
+    try {
+      // Dynamically import to avoid SSR issues
+      const html2pdf = (await import("html2pdf.js")).default;
+      const element = document.getElementById("report-container");
+      
+      const opt = {
+        margin: [0, 0, 0, 0],
+        filename: 'Home_DNA_Report.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    } catch (err) {
+      console.error("Error generating PDF:", err);
+      window.print(); // Fallback
+    }
+  };
+
   // --- PROCESSING SCREEN ---
   if (isSubmitting) {
     return (
@@ -225,7 +246,7 @@ export default function AssessmentForm() {
     );
 
     return (
-      <div className="bg-[#F8F6F2] min-h-screen text-[#1A1A1A] font-sans selection:bg-[#B58A4B] selection:text-white">
+      <div id="report-container" className="bg-[#F8F6F2] min-h-screen text-[#1A1A1A] font-sans selection:bg-[#B58A4B] selection:text-white">
         <div className="min-h-screen flex flex-col items-center justify-center text-center p-6 relative">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -318,7 +339,7 @@ export default function AssessmentForm() {
                 <button onClick={() => setIsBooking(true)} className="bg-[#1A1A1A] text-white px-10 py-5 rounded-full font-sans tracking-widest text-xs uppercase hover:bg-[#333333] transition-colors w-full sm:w-auto shadow-xl">
                   Book FREE Design Consultation
                 </button>
-                <button onClick={() => window.print()} className="bg-white border border-[#E8E3DA] text-[#1A1A1A] px-10 py-5 rounded-full font-sans tracking-widest text-xs uppercase hover:bg-[#F8F6F2] transition-colors w-full sm:w-auto">
+                <button onClick={handleDownloadPDF} className="bg-white border border-[#E8E3DA] text-[#1A1A1A] px-10 py-5 rounded-full font-sans tracking-widest text-xs uppercase hover:bg-[#F8F6F2] transition-colors w-full sm:w-auto">
                   Download Report
                 </button>
               </div>
